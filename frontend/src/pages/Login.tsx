@@ -5,9 +5,28 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import LoginBrand from "@/components/common/LoginBrand";
 import LazyImage from "@/components/common/LazyImg";
+import { useLogin } from "@webbydevs/react-laravel-sanctum-auth";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function Login() {
-  const handleLogin = async (credentials: object) => {};
+  const { login } = useLogin();
+  const navigate = useNavigate();
+
+  const handleLogin = async (credentials: object) => {
+    try {
+      const result = await login(credentials);
+
+      if (result?.success) {
+        toast("Login Successful");
+        navigate("/admin/emails");
+      } else {
+        toast("Invalid email or password. Please try again.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
