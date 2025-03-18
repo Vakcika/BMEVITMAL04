@@ -5,9 +5,26 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CRM Portal</title>
+
+    <!-- Links -->
+    <link rel="stylesheet" href="/styles/style.css" type="text/css" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="loader-wrapper">
+        <svg class="circular" height="50" width="50">
+          <circle
+            class="path"
+            cx="25"
+            cy="25"
+            r="20"
+            fill="none"
+            stroke-width="4"
+            stroke-miterlimit="10"
+          />
+        </svg>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
