@@ -47,7 +47,25 @@ function App() {
           </BrowserRouter>
         </AuthProvider>
       </QueryClientProvider>
-      <Toaster />
+      <Toaster
+        position="bottom-right"
+        className="toaster group"
+        toastOptions={{
+          classNames: {
+            toast:
+              "group rounded-md border p-4 shadow-lg bg-n700 border-n600 text-p100 gap-3",
+            error: "!bg-w50 !border-w300 !text-w500",
+            success: "!bg-s50 !border-s300 !text-s500",
+            warning: "!bg-p50 !border-p300 !text-p800",
+            info: "!bg-b50 !border-b300 !text-b500",
+            title: "font-medium",
+            description: "text-sm",
+            actionButton:
+              "group-data-[type=error]:!bg-w300 group-data-[type=error]:!text-n0",
+            closeButton: "group-data-[type=error]:!text-w400",
+          },
+        }}
+      />
     </div>
   );
 }

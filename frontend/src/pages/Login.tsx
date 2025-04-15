@@ -18,16 +18,21 @@ export default function Login() {
       const result = await login(credentials);
 
       if (result?.success) {
-        toast("Login Successful");
-        navigate("/admin/emails");
+        toast.success("Login Successful");
+        navigate("/app/dashboard");
       } else {
-        toast("Invalid email or password. Please try again.");
+        toast.error("Invalid email or password. Please try again.");
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      const errorMessage =
+        error?.response?.data?.message ??
+        error?.message ??
+        "An error occurred while trying to login.";
+
+      toast.error(errorMessage);
+      console.error(error);
     }
   };
-
   return (
     <>
       <title>CRM Portal | Login</title>
