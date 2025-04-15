@@ -10,7 +10,7 @@ import { AuthProvider } from "@webbydevs/react-laravel-sanctum-auth";
 import { Toaster } from "sonner";
 
 const authConfig = {
-  baseUrl: "http://127.0.0.1:80",
+  baseUrl: import.meta.env.VITE_API_URL,
   loginUrl: "api/login",
   registerUrl: "api/register",
   logoutUrl: "api/logout",
