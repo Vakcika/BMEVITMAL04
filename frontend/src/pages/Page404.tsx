@@ -1,9 +1,15 @@
 export default function Page404() {
   return (
     <>
-      <title>CRM Portal | 404 Page not Found</title>
-      <link rel="canonical" href="/"></link>
-      <meta name="description" content="404 Page not Found" />
+      <title>{import.meta.env.VITE_BRAND + " | 404 | Page Not Found"}</title>
+      <link rel="canonical" href={import.meta.env.VITE_URL + "/404"}></link>
+      <meta
+        name="description"
+        content={
+          import.meta.env.VITE_BRAND +
+          " | 404 | The requested page cannot be found!"
+        }
+      />
       <section className="grid place-items-center px-6 py-48 lg:px-8">
         <div className="text-center">
           <h1 className="font-semibold text-p300 text-5xl">404</h1>

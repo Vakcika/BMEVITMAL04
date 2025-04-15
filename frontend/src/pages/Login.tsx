@@ -35,9 +35,9 @@ export default function Login() {
   };
   return (
     <>
-      <title>CRM Portal | Login</title>
-      <link rel="canonical" href="/login"></link>
-      <meta name="description" content="CRM Portal login page" />
+      <title>{import.meta.env.VITE_BRAND + " | Login"}</title>
+      <link rel="canonical" href={import.meta.env.VITE_URL + "/login"}></link>
+      <meta name="description" content="Ratrace admin page login" />
       <div className="flex flex-col md:flex-row items-center justify-auto">
         <LazyImage
           src="/images/background_login.webp"
