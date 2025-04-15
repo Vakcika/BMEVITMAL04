@@ -6,15 +6,15 @@ export interface LazyImageProps
   src: string;
   alt: string;
   lazy?: boolean;
-  loadWhite?: boolean;
+  classNameImg?: string;
 }
 
 const LazyImage: React.FC<LazyImageProps> = ({
   src,
   alt,
   className = "",
-  lazy = true, // lazy loading enabled by default
-  loadWhite = false,
+  lazy = true,
+  classNameImg,
   ...props
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -36,7 +36,7 @@ const LazyImage: React.FC<LazyImageProps> = ({
         }
       },
       {
-        rootMargin: "250px", // Start loading when image is 50px from viewport
+        rootMargin: "750px",
       }
     );
 
@@ -54,7 +54,6 @@ const LazyImage: React.FC<LazyImageProps> = ({
 
     const img = new Image();
     img.src = src;
-
     img.onload = () => {
       setImgSrc(src);
       setIsLoading(false);
@@ -72,13 +71,17 @@ const LazyImage: React.FC<LazyImageProps> = ({
           src={imgSrc || src}
           alt={alt}
           loading={lazy ? "lazy" : "eager"}
-          className={`w-full h-full ${className} ${
+          className={`w-full h-full object-cover ${
             isLoading ? "opacity-0" : "opacity-100"
-          } transition-opacity duration-300`}
+          } transition-opacity rounded-[3px] duration-300 ${classNameImg}`}
           {...props}
         />
       )}
-      {isLoading && shouldLoad && <LoadingCircle />}
+      {isLoading && shouldLoad && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <LoadingCircle />
+        </div>
+      )}
     </div>
   );
 };
