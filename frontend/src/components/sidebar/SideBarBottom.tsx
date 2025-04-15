@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import useHttpPost from "@/api/useHttpPost";
 import { toast } from "sonner";
+import LazyImage from "../common/LazyImg";
 
 export default function SideBarBottom() {
   const { user } = useAuth();
@@ -42,7 +43,7 @@ export default function SideBarBottom() {
             className="flex items-center justify-center"
             aria-label="Open user menu"
           >
-            <img
+            <LazyImage
               className="w-11 h-11 rounded-lg object-cover"
               src={`https://picsum.photos/200`}
               alt={`${user?.user?.name}'s profile`}
