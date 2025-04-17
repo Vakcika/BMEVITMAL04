@@ -37,7 +37,7 @@ export default function CustomBreadCrumb({
       <Breadcrumb className="mx-2">
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/admin/emails" className="text-xs">
+            <BreadcrumbLink href="/app/dashboard" className="text-xs">
               <House size={18} />
             </BreadcrumbLink>
           </BreadcrumbItem>
