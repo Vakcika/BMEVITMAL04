@@ -16,10 +16,12 @@ type CustomBreadCrumbProps = {
 export default function CustomBreadCrumb({
   model,
 }: Readonly<CustomBreadCrumbProps>) {
-  const pageTitle = `RatRace | Admin | ${model
-    .map((element) => element.label)
-    .filter(Boolean)
-    .join(" | ")}`;
+  const pageTitle =
+    import.meta.env.VITE_BRAND +
+    ` | ${model
+      .map((element) => element.label)
+      .filter(Boolean)
+      .join(" | ")}`;
 
   return (
     <>
