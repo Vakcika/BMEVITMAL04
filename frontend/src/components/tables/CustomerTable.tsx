@@ -21,7 +21,7 @@ import {
 import LoadingCircle from "../common/LoadingCircle";
 
 interface TableProps {
-  value: Email[];
+  value: Customer[];
   loading: boolean;
   title: string;
   paginationProps?: CustomPaginationProps;
@@ -34,7 +34,7 @@ const pageSizeOptions = [
   { value: 50, label: "50 per page" },
 ];
 
-export const TestTable = ({
+export const CustomerTable = ({
   value,
   loading,
   title,
@@ -71,20 +71,20 @@ export const TestTable = ({
           <TableHeader>
             <TableRow>
               <TableHead>ID</TableHead>
+              <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
-              <TableHead>IP Address</TableHead>
-              <TableHead>Added</TableHead>
+              <TableHead>Phone</TableHead>
+              <TableHead>Description</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {value?.map((email) => (
-              <TableRow key={email.id}>
-                <TableCell>{email.id}</TableCell>
-                <TableCell className="font-medium">{email.email}</TableCell>
-                <TableCell>{email.ip_address}</TableCell>
-                <TableCell>
-                  {new Date(email.created_at).toLocaleString()}
-                </TableCell>
+            {value?.map((customer) => (
+              <TableRow key={customer.id}>
+                <TableCell>{customer.id}</TableCell>
+                <TableCell className="font-medium">{customer.name}</TableCell>
+                <TableCell>{customer.email}</TableCell>
+                <TableCell>{customer.phone_number}</TableCell>
+                <TableCell>{customer.description}</TableCell>
               </TableRow>
             ))}
           </TableBody>

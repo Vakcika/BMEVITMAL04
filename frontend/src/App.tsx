@@ -10,6 +10,7 @@ import { AuthProvider } from "@webbydevs/react-laravel-sanctum-auth";
 import { Toaster } from "sonner";
 import Test from "./pages/Test";
 import useIsAuthenticated from "./auth/useIsAuthenticated";
+import Customers from "./pages/Customers";
 
 const authConfig = {
   baseUrl: import.meta.env.VITE_API_URL,
@@ -45,7 +46,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/app" element={<AppLayout />}>
                 <Route path="dashboard" element={<Page404 />} />
-                <Route path="customers" element={<Page404 />} />
+                <Route path="customers" element={<Customers />} />
                 <Route path="finance" element={<Page404 />} />
                 <Route path="test" element={<Test />} />
               </Route>
