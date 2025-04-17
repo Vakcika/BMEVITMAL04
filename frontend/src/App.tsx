@@ -8,6 +8,8 @@ import SideBar from "./components/sidebar/SideBar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@webbydevs/react-laravel-sanctum-auth";
 import { Toaster } from "sonner";
+import Test from "./pages/Test";
+import useIsAuthenticated from "./auth/useIsAuthenticated";
 
 const authConfig = {
   baseUrl: import.meta.env.VITE_API_URL,
@@ -20,6 +22,8 @@ const authConfig = {
 const queryClient = new QueryClient();
 
 function AppLayout() {
+  useIsAuthenticated();
+
   return (
     <div className="sm:ml-16 sm:pl-20 lg:ml-48 m-4">
       <Suspense fallback={<LoadingCircle />}>
@@ -43,7 +47,7 @@ function App() {
                 <Route path="dashboard" element={<Page404 />} />
                 <Route path="customers" element={<Page404 />} />
                 <Route path="finance" element={<Page404 />} />
-                <Route path="test" element={<Page404 />} />
+                <Route path="test" element={<Test />} />
               </Route>
               <Route path="*" element={<Page404 />} />
             </Routes>
