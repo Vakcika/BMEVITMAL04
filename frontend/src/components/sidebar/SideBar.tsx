@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Menu, Gauge } from "lucide-react";
+import { Menu, Gauge, Receipt, Users, FlaskConical } from "lucide-react";
 import SideBarBottom from "./SideBarBottom";
 import SideBarBrand from "./SideBarBrand";
 import SideBarItem from "./SideBarItem";
@@ -34,6 +34,30 @@ export default function SideBar() {
             }
             sideBarName="Dashboard"
             active={location.pathname === "/app/dashboard"}
+          />
+          <SideBarItem
+            href={"/app/customers"}
+            sideBarIcon={
+              <Users className="h-6 w-6 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
+            }
+            sideBarName="Customers"
+            active={location.pathname === "/app/customers"}
+          />
+          <SideBarItem
+            href={"/app/finance"}
+            sideBarIcon={
+              <Receipt className="h-6 w-6 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
+            }
+            sideBarName="Finance"
+            active={location.pathname === "/app/finance"}
+          />
+          <SideBarItem
+            href={"/app/test"}
+            sideBarIcon={
+              <FlaskConical className="h-6 w-6 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
+            }
+            sideBarName="Test"
+            active={location.pathname === "/app/test"}
           />
         </div>
         <SideBarBottom />
