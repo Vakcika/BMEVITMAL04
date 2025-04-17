@@ -14,16 +14,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import LoadingCircle from "../common/LoadingCircle";
+import { DeleteActionButton } from "./actions/DeleteActionButton";
+import { ViewActionButton } from "./actions/ViewActionButton";
 import {
   CustomPaginationProps,
   PaginationControls,
 } from "./PaginationControls";
-import LoadingCircle from "../common/LoadingCircle";
+import PhoneLink from "../common/PhoneLink";
+import EmailLink from "../common/EmailLink";
 
 interface TableProps {
   value: Customer[];
   loading: boolean;
   title: string;
+  onView: (data: Customer) => void;
+  onDelete?: (data: Customer) => void;
   paginationProps?: CustomPaginationProps;
 }
 
@@ -38,6 +44,8 @@ export const CustomerTable = ({
   value,
   loading,
   title,
+  onView,
+  onDelete,
   paginationProps,
 }: TableProps) => {
   if (loading) {
@@ -75,6 +83,7 @@ export const CustomerTable = ({
               <TableHead>Email</TableHead>
               <TableHead>Phone</TableHead>
               <TableHead>Description</TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -82,9 +91,26 @@ export const CustomerTable = ({
               <TableRow key={customer.id}>
                 <TableCell>{customer.id}</TableCell>
                 <TableCell className="font-medium">{customer.name}</TableCell>
-                <TableCell>{customer.email}</TableCell>
-                <TableCell>{customer.phone_number}</TableCell>
+                <TableCell>
+                  <EmailLink email={customer.email} />
+                </TableCell>
+                <TableCell>
+                  <PhoneLink phone={customer.phone_number} />
+                </TableCell>
                 <TableCell>{customer.description}</TableCell>
+                <TableCell>
+                  <div className="flex space-x-2">
+                    <ViewActionButton item={customer} onClick={onView} />
+                    {onDelete && (
+                      <DeleteActionButton
+                        item={customer}
+                        itemName="customer"
+                        itemLabel={customer.name}
+                        onDelete={onDelete}
+                      />
+                    )}
+                  </div>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
