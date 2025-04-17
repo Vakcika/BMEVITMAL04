@@ -8,7 +8,7 @@ export default function useIsAuthenticated() {
 
   useEffect(() => {
     apiClient
-      .get("http://localhost:8000/api/user")
+      .get(import.meta.env.VITE_API_URL + "api/user")
       .then((res) => console.log(res))
       .catch((err) => {
         console.error("Authentication error:", err);
