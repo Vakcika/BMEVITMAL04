@@ -12,7 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
+            $table->foreignId('currency_id')->constrained()->onDelete('cascade');
+            $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
+            $table->foreignId('subscription_id')->nullable()->constrained()->onDelete('set null');
+            $table->string('transaction_type');
+            $table->double('amount', 15, 2);
+            $table->double('amount_in_base', 15, 2);
+            $table->dateTime('transaction_date');
+            $table->date('due_date')->nullable();
+            $table->date('payment_date')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@ class TransactionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class TransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'customer_id' => 'required|exists:customers,id',
+            'currency_id' => 'required|exists:currencies,id',
+            'created_by' => 'required|exists:users,id',
+            'subscription_id' => 'nullable|exists:subscriptions,id',
+            'transaction_type' => 'required|in:income,expense',
+            'amount' => 'required|numeric|min:0',
+            'amount_in_base' => 'required|numeric|min:0',
+            'transaction_date' => 'required|date',
+            'due_date' => 'nullable|date',
+            'payment_date' => 'nullable|date',
+            'notes' => 'nullable|string',
         ];
     }
 }

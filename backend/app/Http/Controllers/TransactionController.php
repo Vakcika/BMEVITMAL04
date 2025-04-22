@@ -9,9 +9,9 @@ class TransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return Transaction::with(['customer', 'currency', 'creator', 'subscription'])->paginate($request->query('per_page', 10));
     }
 
     /**
@@ -19,7 +19,7 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Transaction::create($request->validated());
     }
 
     /**
@@ -27,7 +27,7 @@ class TransactionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Transaction::with(['customer', 'currency', 'creator', 'subscription'])->findOrFail($id);
     }
 
     /**
@@ -35,7 +35,9 @@ class TransactionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $transaction = Transaction::findOrFail($id);
+        $transaction->update($request->validated());
+        return $transaction;
     }
 
     /**
@@ -43,6 +45,8 @@ class TransactionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $transaction = Transaction::findOrFail($id);
+        $transaction->delete();
+        return response()->json(['message' => 'Transaction deleted.']);
     }
 }
