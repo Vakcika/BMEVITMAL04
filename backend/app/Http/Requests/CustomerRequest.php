@@ -22,9 +22,15 @@ class CustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'user_id' => 'required|exists:users,id',
+            'status_id' => 'required|exists:customer_statuses,id',
+            'company_name' => 'required|string|max:55',
+            'name' => 'required|string|max:55',
             'phone_number' => 'nullable|string|max:20',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|max:55',
+            'address' => 'nullable|string',
+            'tax_number' => 'nullable|string|max:55',
+            'website' => 'nullable|string|max:255',
             'description' => 'nullable|string',
         ];
     }
