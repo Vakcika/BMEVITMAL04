@@ -12,6 +12,10 @@ class BillingCycleSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        DB::table('billing_cycles')->insert([
+            ['name' => 'Monthly'],
+            ['name' => 'Quarterly'],
+            ['name' => 'Yearly'],
+        ]);
     }
 }

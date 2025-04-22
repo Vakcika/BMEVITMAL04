@@ -11,7 +11,7 @@ class BillingCycleController extends Controller
      */
     public function index()
     {
-        //
+        return BillingCycle::all();
     }
 
     /**
@@ -19,7 +19,10 @@ class BillingCycleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+        return BillingCycle::create($validated);
     }
 
     /**
@@ -27,7 +30,7 @@ class BillingCycleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return BillingCycle::findOrFail($id);
     }
 
     /**
@@ -35,7 +38,9 @@ class BillingCycleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $billingCycle = BillingCycle::findOrFail($id);
+        $billingCycle->update($request->validated());
+        return $billingCycle;
     }
 
     /**
@@ -43,6 +48,8 @@ class BillingCycleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $billingCycle = BillingCycle::findOrFail($id);
+        $billingCycle->delete();
+        return response()->json(['message' => 'Billing cycle deleted.']);
     }
 }
