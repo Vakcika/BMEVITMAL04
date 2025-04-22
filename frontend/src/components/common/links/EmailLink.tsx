@@ -1,5 +1,5 @@
 interface EmailLinkProps {
-  email: string;
+  email: string | null;
 }
 
 const EmailLink = ({ email }: EmailLinkProps) => {

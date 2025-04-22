@@ -1,5 +1,5 @@
 interface PhoneLinkProps {
-  phone: string;
+  phone: string | null;
 }
 
 const PhoneLink = ({ phone }: PhoneLinkProps) => {
