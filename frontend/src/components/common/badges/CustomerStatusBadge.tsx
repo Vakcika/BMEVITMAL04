@@ -1,7 +1,7 @@
 import React from "react";
 
 interface CustomerStatusBadgeProps {
-  status: CustomerStatus | undefined;
+  status: CustomerStatus;
 }
 
 const CustomerStatusBadge: React.FC<CustomerStatusBadgeProps> = ({
@@ -19,6 +19,8 @@ const CustomerStatusBadge: React.FC<CustomerStatusBadgeProps> = ({
         return "bg-purple-100 text-purple-800";
       case "loyal customer":
         return "bg-green-100 text-green-800";
+      case "failed":
+        return "bg-red-100 text-red-800";
       default:
         return "bg-n100 text-n0";
     }

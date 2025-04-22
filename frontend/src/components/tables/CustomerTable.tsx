@@ -23,7 +23,8 @@ import {
 import PhoneLink from "../common/links/PhoneLink";
 import EmailLink from "../common/links/EmailLink";
 import { TableSkeleton } from "./TableSkeleton";
-import CustomerStatusBadge from "../../app/customers/CustomerStatusBadge";
+import CustomerStatusBadge from "../common/badges/CustomerStatusBadge";
+import UserAvatar from "../common/UserAvatar";
 
 interface TableProps {
   value: Customer[];
@@ -110,12 +111,7 @@ export const CustomerTable = ({
                   <PhoneLink phone={customer.phone_number} />
                 </TableCell>
                 <TableCell>
-                  <span
-                    className="bg-p75 rounded-full text-lg font-bold flex items-center justify-center w-10 h-10"
-                    title={customer.user?.name}
-                  >
-                    {customer.user?.name.slice(0, 1)}
-                  </span>
+                  <UserAvatar user={customer.user?.name} />
                 </TableCell>
                 <TableCell>
                   <CustomerStatusBadge status={customer.status} />
