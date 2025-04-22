@@ -9,9 +9,9 @@ class LogController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return Log::with(['customer', 'user', 'status'])->paginate($request->query('per_page', 10));
     }
 
     /**
@@ -19,7 +19,7 @@ class LogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Log::create($request->validated());
     }
 
     /**
@@ -27,7 +27,7 @@ class LogController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Log::with(['customer', 'user', 'status'])->findOrFail($id);
     }
 
     /**
@@ -35,7 +35,9 @@ class LogController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $log = Log::findOrFail($id);
+        $log->update($request->validated());
+        return $log;
     }
 
     /**
@@ -43,6 +45,8 @@ class LogController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $log = Log::findOrFail($id);
+        $log->delete();
+        return response()->json(['message' => 'Log deleted.']);
     }
 }

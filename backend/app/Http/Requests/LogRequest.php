@@ -11,7 +11,7 @@ class LogRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class LogRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'customer_id' => 'required|exists:customers,id',
+            'user_id' => 'required|exists:users,id',
+            'type' => 'required|exists:log_statuses,id',
+            'follow_up_date' => 'nullable|date',
+            'description' => 'nullable|string',
         ];
     }
 }
