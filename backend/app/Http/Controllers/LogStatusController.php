@@ -11,7 +11,7 @@ class LogStatusController extends Controller
      */
     public function index()
     {
-        //
+        return LogStatusController::all();
     }
 
     /**
@@ -19,7 +19,7 @@ class LogStatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return LogStatusController::create($request->validated());
     }
 
     /**
@@ -27,7 +27,7 @@ class LogStatusController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return LogStatusController::findOrFail($id);
     }
 
     /**
@@ -35,7 +35,9 @@ class LogStatusController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $type = LogStatusController::findOrFail($id);
+        $type->update($request->validated());
+        return $type;
     }
 
     /**
@@ -43,6 +45,8 @@ class LogStatusController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $type = LogStatusController::findOrFail($id);
+        $type->delete();
+        return response()->json(['message' => 'Log status deleted.']);
     }
 }
