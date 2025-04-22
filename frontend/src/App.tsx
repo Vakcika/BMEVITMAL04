@@ -8,7 +8,6 @@ import SideBar from "./components/sidebar/SideBar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@webbydevs/react-laravel-sanctum-auth";
 import { Toaster } from "sonner";
-import Test from "./pages/Test";
 import useIsAuthenticated from "./auth/useIsAuthenticated";
 import Customers from "./app/customers/ListCustomers";
 import CustomerView from "./app/customers/ViewCustomer";
@@ -28,7 +27,7 @@ function AppLayout() {
   useIsAuthenticated();
 
   return (
-    <div className="sm:ml-16 sm:pl-20 lg:ml-48 m-4">
+    <div className="sm:ml-16 sm:pl-20 lg:ml-48 m-4 relative min-h-screen">
       <Suspense fallback={<LoadingCircle />}>
         <SideBar />
         <Outlet />
@@ -59,7 +58,6 @@ function App() {
                   element={<CustomerForm />}
                 />
                 <Route path="finance" element={<Page404 />} />
-                <Route path="test" element={<Test />} />
               </Route>
               <Route path="*" element={<Page404 />} />
             </Routes>

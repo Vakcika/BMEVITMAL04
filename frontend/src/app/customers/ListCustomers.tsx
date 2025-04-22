@@ -17,12 +17,12 @@ export default function ListCustomers() {
     `/api/customers?per_page=${rows}&page=${page}`
   );
 
-  const deleteMutation = useHttpDelete("/api/customers", query);
-
   if (query.error) {
     toast.error(query.error.name || "Failed to load customers.");
     console.error(query.error);
   }
+
+  const deleteMutation = useHttpDelete("/api/customers", query);
 
   const handleView = (customer: Customer) => {
     navigate(`/app/customers/${customer.id}`);
@@ -54,7 +54,7 @@ export default function ListCustomers() {
       <CustomBreadCrumb model={breadcrumbs} />
       <div className="flex justify-between items-center mt-6 mb-4">
         <h1 className="text-2xl font-semibold">Customers</h1>
-        <Button className="bg-p300 text-white" onClick={handleCreate}>
+        <Button className="bg-p300 text-n0" onClick={handleCreate}>
           <Plus className="w-4 h-4 mr-2" />
           Add new customer
         </Button>
@@ -67,7 +67,7 @@ export default function ListCustomers() {
           onView={handleView}
           onDelete={handleDelete}
           paginationProps={{
-            totalRecords: query.data?.total ?? 0,
+            totalRecords: query.data?.meta.total ?? 0,
             rows,
             page,
             setRows,

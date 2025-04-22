@@ -11,4 +11,8 @@ interface PagableMetaData {
   total: number;
 }
 
-interface PagableResourceWrapper<T> extends DataWrapper<T>, PagableMetaData {}
+interface PagableWrapper<T> extends DataWrapper<T>, PagableMetaData {}
+
+interface PagableResourceWrapper<T> extends DataWrapper<T> {
+  meta: PagableMetaData;
+}
