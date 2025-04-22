@@ -11,7 +11,9 @@ class LogController extends Controller
      */
     public function index(Request $request)
     {
-        return Log::with(['customer', 'user', 'status'])->paginate($request->query('per_page', 10));
+        $perPage = $request->query('per_page', 10);
+        $page = $request->query('page', 1);
+        return Log::paginate($perPage, ['*'], 'page', $page);
     }
 
     /**
@@ -27,7 +29,7 @@ class LogController extends Controller
      */
     public function show(string $id)
     {
-        return Log::with(['customer', 'user', 'status'])->findOrFail($id);
+        return Log::findOrFail($id);
     }
 
     /**

@@ -11,7 +11,9 @@ class TransactionController extends Controller
      */
     public function index(Request $request)
     {
-        return Transaction::with(['customer', 'currency', 'creator', 'subscription'])->paginate($request->query('per_page', 10));
+        $perPage = $request->query('per_page', 10);
+        $page = $request->query('page', 1);
+        return Transaction::paginate($perPage, ['*'], 'page', $page);
     }
 
     /**
@@ -27,7 +29,7 @@ class TransactionController extends Controller
      */
     public function show(string $id)
     {
-        return Transaction::with(['customer', 'currency', 'creator', 'subscription'])->findOrFail($id);
+        return Transaction::findOrFail($id);
     }
 
     /**

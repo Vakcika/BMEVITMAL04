@@ -11,7 +11,9 @@ class SubscriptionController extends Controller
      */
     public function index(Request $request)
     {
-        return Subscription::with(['customer', 'currency', 'billingCycle'])->paginate($request->query('per_page', 10));
+        $perPage = $request->query('per_page', 10);
+        $page = $request->query('page', 1);
+        return Subscription::paginate($perPage, ['*'], 'page', $page);
     }
 
     /**
@@ -27,7 +29,7 @@ class SubscriptionController extends Controller
      */
     public function show(string $id)
     {
-        return Subscription::with(['customer', 'currency', 'billingCycle'])->findOrFail($id);
+        return Subscription::findOrFail($id);
     }
 
     /**

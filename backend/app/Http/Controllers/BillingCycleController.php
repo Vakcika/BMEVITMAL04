@@ -19,10 +19,7 @@ class BillingCycleController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-        return BillingCycle::create($validated);
+        return BillingCycle::create($request->validated());
     }
 
     /**
