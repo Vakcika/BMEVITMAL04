@@ -26,7 +26,7 @@ class TransactionRequest extends FormRequest
             'currency_id' => 'required|exists:currencies,id',
             'created_by' => 'required|exists:users,id',
             'subscription_id' => 'nullable|exists:subscriptions,id',
-            'transaction_type' => 'required|in:income,expense',
+            'transaction_type_id' => 'required|exists:transaction_types,id',
             'amount' => 'required|numeric|min:0',
             'amount_in_base' => 'required|numeric|min:0',
             'transaction_date' => 'required|date',

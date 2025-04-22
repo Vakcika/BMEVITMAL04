@@ -54,4 +54,9 @@ class Transaction extends Model
     {
         return $this->belongsTo(Subscription::class);
     }
+
+    public function type()
+    {
+        return $this->belongsTo(TransactionType::class, 'transaction_type_id');
+    }
 }

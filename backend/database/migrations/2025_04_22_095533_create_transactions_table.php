@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('currency_id')->constrained()->onDelete('cascade');
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
             $table->foreignId('subscription_id')->nullable()->constrained()->onDelete('set null');
-            $table->string('transaction_type');
+            $table->foreignId('transaction_type_id')->constrained('transaction_types')->onDelete('restrict');
             $table->double('amount', 15, 2);
             $table->double('amount_in_base', 15, 2);
             $table->dateTime('transaction_date');

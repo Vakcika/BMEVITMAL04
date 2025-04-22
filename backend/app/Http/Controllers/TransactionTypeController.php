@@ -11,7 +11,7 @@ class TransactionTypeController extends Controller
      */
     public function index()
     {
-        //
+        return TransactionType::all();
     }
 
     /**
@@ -19,7 +19,7 @@ class TransactionTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return TransactionType::create($request->validated());
     }
 
     /**
@@ -27,7 +27,7 @@ class TransactionTypeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return TransactionType::findOrFail($id);
     }
 
     /**
@@ -35,7 +35,9 @@ class TransactionTypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $type = TransactionType::findOrFail($id);
+        $type->update($request->validated());
+        return $type;
     }
 
     /**
@@ -43,6 +45,8 @@ class TransactionTypeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $type = TransactionType::findOrFail($id);
+        $type->delete();
+        return response()->json(['message' => 'Transaction type deleted.']);
     }
 }
