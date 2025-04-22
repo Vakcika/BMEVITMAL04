@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerRequest;
+use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
+
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -15,8 +17,12 @@ class CustomerController extends Controller
     {
         $perPage = $request->query('per_page', 10);
         $page = $request->query('page', 1);
-        return Customer::paginate($perPage, ['*'], 'page', $page);
+
+        $customers = Customer::paginate($perPage, ['*'], 'page', $page);
+
+        return CustomerResource::collection($customers);
     }
+
 
     /**
      * Store a newly created customer in storage.
@@ -32,7 +38,7 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        return Customer::findOrFail($id);
+        return new CustomerResource(Customer::findOrFail($id));
     }
 
     /**
