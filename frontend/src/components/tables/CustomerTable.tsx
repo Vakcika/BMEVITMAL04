@@ -23,6 +23,7 @@ import {
 } from "./PaginationControls";
 import PhoneLink from "../common/PhoneLink";
 import EmailLink from "../common/EmailLink";
+import { TableSkeleton } from "./TableSkeleton";
 
 interface TableProps {
   value: Customer[];
@@ -49,7 +50,13 @@ export const CustomerTable = ({
   paginationProps,
 }: TableProps) => {
   if (loading) {
-    return <LoadingCircle />;
+    return (
+      <TableSkeleton
+        rowCount={paginationProps?.rows || 5}
+        columnCount={6}
+        actionCount={onDelete ? 2 : 1}
+      />
+    );
   }
 
   return (
