@@ -13,9 +13,10 @@ class LogStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('transaction_types')->insert([
+        DB::table('log_statuses')->insert([
             ['name' => 'email'],
             ['name' => 'phone'],
+            ['name' => 'meeting'],
         ]);
     }
 }

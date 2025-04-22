@@ -4,6 +4,12 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+use App\Models\Customer;
+use App\Models\Currency;
+use App\Models\BillingCycle;
+use Faker\Factory as Faker;
 
 class SubscriptionSeeder extends Seeder
 {

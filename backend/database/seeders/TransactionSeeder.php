@@ -4,6 +4,17 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
+use App\Models\Customer;
+use App\Models\User;
+use App\Models\Currency;
+use App\Models\Subscription;
+use App\Models\TransactionType;
+
+use Carbon\Carbon;
+use Faker\Factory as Faker;
 
 class TransactionSeeder extends Seeder
 {
