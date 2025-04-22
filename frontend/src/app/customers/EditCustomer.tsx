@@ -345,7 +345,7 @@ export default function EditCustomer({ isNew = false }) {
                           id="phone_number"
                           name="phone_number"
                           placeholder="Phone number"
-                          value={values.phone_number || ""}
+                          value={values.phone_number ?? ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
                         />
@@ -380,7 +380,7 @@ export default function EditCustomer({ isNew = false }) {
                       id="description"
                       name="description"
                       placeholder="Additional notes or description"
-                      value={values.description || ""}
+                      value={values.description ?? ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       rows={4}

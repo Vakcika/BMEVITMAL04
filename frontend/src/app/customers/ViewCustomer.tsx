@@ -24,7 +24,8 @@ import PhoneLink from "@/components/common/links/PhoneLink";
 import WebsiteLink from "@/components/common/links/WebsiteLink";
 import Detail from "@/components/common/details/Detail";
 import DetailWithIcon from "@/components/common/details/DetailWithIcon";
-import CustomerStatusBadge from "@/app/customers/CustomerStatusBadge";
+import CustomerStatusBadge from "@/components/common/badges/CustomerStatusBadge";
+import UserAvatar from "@/components/common/UserAvatar";
 
 export default function ViewCustomer() {
   const { id } = useParams();
@@ -115,7 +116,7 @@ export default function ViewCustomer() {
               <DetailWithIcon
                 icon={<UserCheck className="w-6 h-6 text-n100" />}
                 label="Assigned to"
-                value={customer.user?.name ?? "N/A"}
+                value={<UserAvatar user={customer.user?.name} />}
               />
               <DetailWithIcon
                 icon={<User className="w-6 h-6 text-n100" />}
@@ -166,7 +167,7 @@ export default function ViewCustomer() {
               <Detail label="Address" value={customer.address ?? "N/A"} />
               <Detail
                 label="Description"
-                value={customer.description || "No description provided."}
+                value={customer.description ?? "No description provided."}
               />
             </div>
           </CardContent>
