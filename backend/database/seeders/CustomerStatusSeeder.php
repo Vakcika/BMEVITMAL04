@@ -19,6 +19,7 @@ class CustomerStatusSeeder extends Seeder
             ['name' => 'Offer Sent'],
             ['name' => 'In Progress'],
             ['name' => 'Loyal Customer'],
+            ['name' => 'Failed'],
         ]);
     }
 }
