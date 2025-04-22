@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\EmailController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\CustomerStatusController;
@@ -31,6 +31,13 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    // Users
+    Route::get('/users', [UserController::class, 'index']);
+    Route::post('/users', [CustomerController::class, 'store']);
+    Route::get('/users/{id}', [CustomerController::class, 'show']);
+    Route::put('/users/{id}', [CustomerController::class, 'update']);
+    Route::delete('/users/{id}', [CustomerController::class, 'destroy']);
 
     // Customers
     Route::get('/customers', [CustomerController::class, 'index']);
