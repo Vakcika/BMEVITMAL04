@@ -11,7 +11,7 @@ class SubscriptionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class SubscriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'customer_id' => 'required|exists:customers,id',
+            'billing_cycle' => 'required|exists:billing_cycles,id',
+            'currency_id' => 'required|exists:currencies,id',
+            'name' => 'required|string|max:55',
+            'amount' => 'required|numeric|min:0',
+            'start_date' => 'required|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
         ];
     }
 }
