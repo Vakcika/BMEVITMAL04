@@ -1,5 +1,6 @@
 import { useApiClient } from "@webbydevs/react-laravel-sanctum-auth";
 import { UseQueryResult, useMutation } from "@tanstack/react-query";
+import { UUID } from "crypto";
 
 export default function useHttpDelete(
   route: string,
@@ -7,7 +8,7 @@ export default function useHttpDelete(
 ) {
   const apiClient = useApiClient();
   return useMutation({
-    mutationFn: (id: number) => {
+    mutationFn: (id: number | UUID) => {
       return apiClient.delete(`${route}/${id}`);
     },
     onSuccess: () => {
