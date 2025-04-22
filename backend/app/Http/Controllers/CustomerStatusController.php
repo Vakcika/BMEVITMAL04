@@ -11,7 +11,7 @@ class CustomerStatusController extends Controller
      */
     public function index()
     {
-        //
+        return CustomerStatus::all();
     }
 
     /**
@@ -19,7 +19,7 @@ class CustomerStatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return CustomerStatus::create($request->validated());
     }
 
     /**
@@ -27,7 +27,7 @@ class CustomerStatusController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return CustomerStatus::findOrFail($id);
     }
 
     /**
@@ -35,7 +35,9 @@ class CustomerStatusController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $status = CustomerStatus::findOrFail($id);
+        $status->update($request->validated());
+        return $status;
     }
 
     /**
@@ -43,6 +45,8 @@ class CustomerStatusController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $status = CustomerStatus::findOrFail($id);
+        $status->delete();
+        return response()->json(['message' => 'Customer status deleted.']);
     }
 }

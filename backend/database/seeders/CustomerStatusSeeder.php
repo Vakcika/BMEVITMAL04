@@ -12,6 +12,12 @@ class CustomerStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        DB::table('customer_statuses')->insert([
+            ['name' => 'Outreached'],
+            ['name' => 'Meeting Scheduled'],
+            ['name' => 'Offer Sent'],
+            ['name' => 'In Progress'],
+            ['name' => 'Loyal Customer'],
+        ]);
     }
 }
