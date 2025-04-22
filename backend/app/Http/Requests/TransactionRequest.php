@@ -24,7 +24,7 @@ class TransactionRequest extends FormRequest
         return [
             'customer_id' => 'required|exists:customers,id',
             'currency_id' => 'required|exists:currencies,id',
-            'created_by' => 'required|exists:users,id',
+            'created_by_id' => 'required|exists:users,id',
             'subscription_id' => 'nullable|exists:subscriptions,id',
             'transaction_type_id' => 'required|exists:transaction_types,id',
             'amount' => 'required|numeric|min:0',
@@ -32,7 +32,7 @@ class TransactionRequest extends FormRequest
             'transaction_date' => 'required|date',
             'due_date' => 'nullable|date',
             'payment_date' => 'nullable|date',
-            'notes' => 'nullable|string',
+            'note' => 'nullable|string',
         ];
     }
 }

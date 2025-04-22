@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+
 
 class Transaction extends Model
 {
@@ -13,7 +15,7 @@ class Transaction extends Model
         'id',
         'customer_id',
         'currency_id',
-        'created_by',
+        'created_by_id',
         'subscription_id',
         'transaction_type',
         'amount',
@@ -21,7 +23,7 @@ class Transaction extends Model
         'transaction_date',
         'due_date',
         'payment_date',
-        'notes',
+        'note',
     ];
 
     protected static function boot()
@@ -47,7 +49,7 @@ class Transaction extends Model
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'created_by_id');
     }
 
     public function subscription()

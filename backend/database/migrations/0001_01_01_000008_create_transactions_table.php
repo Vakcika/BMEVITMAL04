@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->foreignId('currency_id')->constrained()->onDelete('cascade');
-            $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
+            $table->foreignId('created_by_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('subscription_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('transaction_type_id')->constrained('transaction_types')->onDelete('restrict');
             $table->double('amount', 15, 2);
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->dateTime('transaction_date');
             $table->date('due_date')->nullable();
             $table->date('payment_date')->nullable();
-            $table->text('notes')->nullable();
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

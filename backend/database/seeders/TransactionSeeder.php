@@ -36,7 +36,7 @@ class TransactionSeeder extends Seeder
                 'id' => (string) Str::uuid(),
                 'customer_id' => $faker->randomElement($customers),
                 'currency_id' => $faker->randomElement($currencies),
-                'created_by' => $faker->randomElement($users),
+                'created_by_id' => $faker->randomElement($users),
                 'subscription_id' => $faker->optional()->randomElement($subscriptions),
                 'transaction_type_id' => TransactionType::inRandomOrder()->first()?->id ?? 1,
                 'amount' => $amount,
@@ -44,7 +44,7 @@ class TransactionSeeder extends Seeder
                 'transaction_date' => Carbon::now()->subDays(rand(0, 365)),
                 'due_date' => $faker->optional()->date(),
                 'payment_date' => $faker->optional()->date(),
-                'notes' => $faker->sentence,
+                'note' => $faker->sentence,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
