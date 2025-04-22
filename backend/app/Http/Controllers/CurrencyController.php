@@ -11,7 +11,7 @@ class CurrencyController extends Controller
      */
     public function index()
     {
-        //
+        return Currency::all();
     }
 
     /**
@@ -19,7 +19,7 @@ class CurrencyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Currency::create($request->validated());
     }
 
     /**
@@ -27,7 +27,7 @@ class CurrencyController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Currency::findOrFail($id);
     }
 
     /**
@@ -35,7 +35,9 @@ class CurrencyController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $currency = Currency::findOrFail($id);
+        $currency->update($request->validated());
+        return $currency;
     }
 
     /**
@@ -43,6 +45,8 @@ class CurrencyController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $currency = Currency::findOrFail($id);
+        $currency->delete();
+        return response()->json(['message' => 'Currency deleted.']);
     }
 }

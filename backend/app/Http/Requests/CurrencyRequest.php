@@ -11,7 +11,7 @@ class CurrencyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class CurrencyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'code' => 'required|string|max:3|unique:currencies,code,' . $this->route('currency'),
+            'symbol' => 'required|string|max:10',
         ];
     }
 }
