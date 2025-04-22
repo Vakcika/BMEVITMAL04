@@ -51,14 +51,6 @@ export default function SideBar() {
             sideBarName="Finance"
             active={location.pathname === "/app/finance"}
           />
-          <SideBarItem
-            href={"/app/test"}
-            sideBarIcon={
-              <FlaskConical className="h-6 w-6 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
-            }
-            sideBarName="Test"
-            active={location.pathname === "/app/test"}
-          />
         </div>
         <SideBarBottom />
       </aside>
