@@ -13,7 +13,6 @@ export default function TransactionFilters() {
   const { currencies, transactionTypes, isLoading } =
     useTransactionFormOptions();
 
-  console.log(searchParams);
   const updateParam = (key: string, value: string) => {
     const newParams = new URLSearchParams(searchParams);
     if (value === "all") {
