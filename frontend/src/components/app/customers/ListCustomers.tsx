@@ -18,7 +18,7 @@ export default function ListCustomers() {
   );
 
   if (query.error) {
-    toast.error(query.error.name || "Failed to load customers.");
+    toast.error(query.error.message || "Failed to load customers.");
     console.error(query.error);
   }
 

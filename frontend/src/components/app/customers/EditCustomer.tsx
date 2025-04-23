@@ -72,21 +72,21 @@ export default function EditCustomer({ isNew = false }) {
     : useHttpGet<{ data: Customer }>(`/api/customers/${id}`);
 
   if (query.error) {
-    toast.error(query.error.name || "Failed to load customer.");
+    toast.error(query.error.message || "Failed to load customer.");
     console.error(query.error);
   }
 
   const statusesQuery = useHttpGet<CustomerStatus[]>("/api/customer-statuses");
 
   if (statusesQuery.error) {
-    toast.error(statusesQuery.error.name || "Failed to load status.");
+    toast.error(statusesQuery.error.message || "Failed to load status.");
     console.error(statusesQuery.error);
   }
 
   const usersQuery = useHttpGet<User[]>("/api/users");
 
   if (usersQuery.error) {
-    toast.error(usersQuery.error.name || "Failed to load users.");
+    toast.error(usersQuery.error.message || "Failed to load users.");
     console.error(usersQuery.error);
   }
 

@@ -24,7 +24,7 @@ export default function ViewCustomer() {
   }, [query.data]);
 
   if (query.error) {
-    toast.error(query.error.name || "Failed to load customer.");
+    toast.error(query.error.message || "Failed to load customer.");
     console.error(query.error);
   }
 

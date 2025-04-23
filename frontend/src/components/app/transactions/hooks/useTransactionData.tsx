@@ -45,19 +45,19 @@ export function useTransactionData(isNew: boolean, id?: string) {
     : useHttpGet<TransactionResponse>(`/api/transactions/${id}`);
 
   if (query.error) {
-    toast.error(query.error.name || "Failed to load transaction.");
+    toast.error(query.error.message || "Failed to load transaction.");
     console.error(query.error);
   }
 
   const customersQuery = useHttpGet<CustomersResponse>("/api/customers");
   if (customersQuery.error) {
-    toast.error(customersQuery.error.name || "Failed to load customers.");
+    toast.error(customersQuery.error.message || "Failed to load customers.");
     console.error(customersQuery.error);
   }
 
   const currenciesQuery = useHttpGet<Currency[]>("/api/currencies");
   if (currenciesQuery.error) {
-    toast.error(currenciesQuery.error.name || "Failed to load currencies.");
+    toast.error(currenciesQuery.error.message || "Failed to load currencies.");
     console.error(currenciesQuery.error);
   }
 
@@ -66,7 +66,7 @@ export function useTransactionData(isNew: boolean, id?: string) {
   );
   if (transactionTypesQuery.error) {
     toast.error(
-      transactionTypesQuery.error.name || "Failed to load transaction types."
+      transactionTypesQuery.error.message || "Failed to load transaction types."
     );
     console.error(transactionTypesQuery.error);
   }
@@ -75,7 +75,7 @@ export function useTransactionData(isNew: boolean, id?: string) {
     useHttpGet<SubscriptionsResponse>("/api/subscriptions");
   if (subscriptionsQuery.error) {
     toast.error(
-      subscriptionsQuery.error.name || "Failed to load subscriptions."
+      subscriptionsQuery.error.message || "Failed to load subscriptions."
     );
     console.error(subscriptionsQuery.error);
   }

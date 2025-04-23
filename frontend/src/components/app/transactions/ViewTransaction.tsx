@@ -19,7 +19,7 @@ export default function ViewTransaction() {
 
   const query = useHttpGet<{ data: Transaction }>(`/api/transactions/${id}`);
   if (query.error) {
-    toast.error(query.error.name || "Failed to load transaction.");
+    toast.error(query.error.message || "Failed to load transaction.");
     console.error(query.error);
   }
 
