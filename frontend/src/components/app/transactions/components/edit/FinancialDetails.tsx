@@ -1,8 +1,8 @@
 import { Transaction, Currency } from "@/types/Transaction";
 import { FormikErrors, FormikTouched } from "formik";
 import { ChangeEvent, FocusEvent } from "react";
-import { FormInput } from "./FormInput";
-import { FormSelect } from "./FormSelect";
+import { FormInput } from "../../../../common/form/FormInput";
+import { FormSelect } from "../../../../common/form/FormSelect";
 
 interface FinancialDetailsSectionProps {
   values: Transaction;

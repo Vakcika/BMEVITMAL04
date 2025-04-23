@@ -1,7 +1,7 @@
 import { Transaction } from "@/types/Transaction";
 import { FormikErrors, FormikTouched } from "formik";
 import { ChangeEvent, FocusEvent } from "react";
-import { FormInput } from "./FormInput";
+import { FormInput } from "../../../../common/form/FormInput";
 
 interface DatesSectionProps {
   values: Transaction;
