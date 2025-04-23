@@ -7,9 +7,7 @@ export default function ListTransactions() {
   return (
     <div className="p-4">
       <CustomBreadCrumb model={breadcrumbs} />
-      <TransactionListWrapper currency="HUF" title="HUF Transactions" />
-      <TransactionListWrapper currency="EUR" title="EUR Transactions" />
-      <TransactionListWrapper currency="USD" title="USD Transactions" />
+      <TransactionListWrapper title="Transactions" />
     </div>
   );
 }

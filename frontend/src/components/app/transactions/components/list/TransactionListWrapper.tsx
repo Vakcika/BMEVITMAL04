@@ -12,7 +12,6 @@ import { TransactionTable } from "@/components/app/transactions/components/list/
 import { Transaction } from "@/types/Transaction";
 
 interface Props {
-  currency: string;
   title?: string;
   baseUrl?: string;
   defaultRows?: number;
@@ -20,7 +19,6 @@ interface Props {
 }
 
 export default function TransactionListWrapper({
-  currency,
   title = "Transactions",
   baseUrl = "/api/transactions",
   defaultRows = 5,
@@ -31,7 +29,7 @@ export default function TransactionListWrapper({
   const [rows, setRows] = useState(defaultRows);
 
   const query = useHttpGet<PagableResourceWrapper<Transaction[]>>(
-    `${baseUrl}?per_page=${rows}&page=${page}&currency=${currency}${queryParams}`
+    `${baseUrl}?per_page=${rows}&page=${page}${queryParams}`
   );
 
   if (query.error) {

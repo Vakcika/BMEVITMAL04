@@ -17,6 +17,7 @@ class TransactionController extends Controller
         $validated = $request->validate([
             'currency' => 'nullable|string|exists:currencies,code',
             'customer' => 'nullable|string|exists:customers,id',
+            'type' => 'nullable|string|exists:transaction_types,name',
             'sort_by' => 'nullable|in:amount,amount_in_base,transaction_date,created_at,updated_at',
             'sort_dir' => 'nullable|in:asc,desc',
             'per_page' => 'nullable|integer|min:1|max:100',
@@ -31,9 +32,15 @@ class TransactionController extends Controller
             });
         }
 
-         if (!empty($validated['customer'])) {
+        if (!empty($validated['customer'])) {
             $query->whereHas('customer', function ($q) use ($validated) {
                 $q->where('id', $validated['customer']);
+            });
+        }
+
+         if (!empty($validated['type'])) {
+            $query->whereHas('type', function ($q) use ($validated) {
+                $q->where('name', $validated['type']);
             });
         }
 

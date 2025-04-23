@@ -66,23 +66,11 @@ export default function ViewCustomer() {
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-6">
         <CustomerDetailsCard customer={customer} />
         <CustomerExtraInfoCard customer={customer} />
-
-        <TransactionListWrapper
-          currency="HUF"
-          title="HUF Transactions"
-          queryParams={"&customer=" + customer.id}
-        />
-        <TransactionListWrapper
-          currency="EUR"
-          title="EUR Transactions"
-          queryParams={"&customer=" + customer.id}
-        />
-        <TransactionListWrapper
-          currency="USD"
-          title="USD Transactions"
-          queryParams={"&customer=" + customer.id}
-        />
       </div>
+      <TransactionListWrapper
+        title="Transactions"
+        queryParams={"&customer=" + customer.id}
+      />
     </div>
   );
 }

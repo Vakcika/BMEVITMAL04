@@ -15,6 +15,7 @@ import EditCustomer from "./components/app/customers/EditCustomer";
 import ListTransactions from "./components/app/transactions/ListTransactions";
 import EditTransaction from "./components/app/transactions/EditTransaction";
 import ViewTransaction from "./components/app/transactions/ViewTransaction";
+import Dashboard from "./components/app/dashboard/Dashboard";
 
 const authConfig = {
   baseUrl: import.meta.env.VITE_API_URL,
@@ -49,7 +50,7 @@ function App() {
               <Route path="/" element={<Login />} />
               <Route path="/login" element={<Login />} />
               <Route path="/app" element={<AppLayout />}>
-                <Route path="dashboard" element={<Page404 />} />
+                <Route path="dashboard" element={<Dashboard />} />
                 <Route path="customers" element={<ListCustomers />} />
                 <Route
                   path="/app/customers/new"
