@@ -17,7 +17,7 @@ class Transaction extends Model
         'currency_id',
         'created_by_id',
         'subscription_id',
-        'transaction_type',
+        'transaction_type_id',
         'amount',
         'amount_in_base',
         'transaction_date',
