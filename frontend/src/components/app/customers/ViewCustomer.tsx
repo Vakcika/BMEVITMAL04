@@ -5,9 +5,9 @@ import useHttpGet from "@/api/useHttpGet";
 import useHttpDelete from "@/api/useHttpDelete";
 import LoadingCircle from "@/components/common/LoadingCircle";
 import CustomBreadCrumb from "@/components/common/CustomBreadcrumb";
-import ViewCustomerHeader from "./view/ViewCustomerHeader";
-import CustomerDetailsCard from "./view/CustomerDatilsCard";
-import CustomerExtraInfoCard from "./view/CustomerExtraInfoCard";
+import ViewCustomerHeader from "./components/view/ViewCustomerHeader";
+import CustomerDetailsCard from "./components/view/CustomerDatilsCard";
+import CustomerExtraInfoCard from "./components/view/CustomerExtraInfoCard";
 
 export default function ViewCustomer() {
   const { id } = useParams();

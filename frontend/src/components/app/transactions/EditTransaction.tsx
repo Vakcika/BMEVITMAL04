@@ -10,9 +10,11 @@ import BasicInformation from "./components/edit/BasicInformation.tsx";
 import Dates from "./components/edit/Dates.tsx";
 import FinancialDetails from "./components/edit/FinancialDetails.tsx";
 import Note from "./components/edit/Note.tsx";
-import { useTransactionData } from "./hooks/useTransactionData.tsx";
-import { useTransactionMutations } from "./hooks/useTransactionDataMutation.tsx";
 import { TransactionSchema } from "../validationSchemas.tsx";
+import { useTransactionData } from "./hooks/useTransactionData.ts";
+import { useTransactionMutations } from "./hooks/useTransactionDataMutation.ts";
+import useTransactionFormOptions from "./hooks/useTransactionFormOptions.tsx";
+import FormActions from "@/components/common/form/FormAction.tsx";
 
 interface EditTransactionProps {
   isNew?: boolean;
@@ -24,14 +26,10 @@ export default function EditTransaction({
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const {
-    initialValues,
-    isLoading,
-    customers,
-    currencies,
-    transactionTypes,
-    subscriptions,
-  } = useTransactionData(isNew, id);
+  const { initialValues, isLoading } = useTransactionData(isNew, id);
+
+  const { customers, currencies, transactionTypes, subscriptions } =
+    useTransactionFormOptions();
 
   const { createTransaction, updateTransaction } = useTransactionMutations();
 
@@ -152,18 +150,14 @@ export default function EditTransaction({
                 </div>
 
                 <div className="flex justify-end space-x-2 pt-4">
-                  <Button type="button" variant="ghost" onClick={handleCancel}>
-                    Cancel
-                  </Button>
-                  <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting
-                      ? isNew
-                        ? "Creating..."
-                        : "Saving..."
-                      : isNew
-                      ? "Create Transaction"
-                      : "Save Changes"}
-                  </Button>
+                  <FormActions
+                    isSubmitting={isSubmitting}
+                    onCancel={handleCancel}
+                    submitText={isNew ? "Create transaction" : "Save"}
+                    submittingText={
+                      isNew ? "Creating transaction" : "Saving..."
+                    }
+                  />
                 </div>
               </Form>
             )}
