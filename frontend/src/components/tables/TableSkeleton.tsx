@@ -73,7 +73,7 @@ export const TableSkeleton = ({
                           .map((_, actionIndex) => (
                             <Skeleton
                               key={`action-${rowIndex}-${actionIndex}`}
-                              className="h-8 w-8 rounded-md"
+                              className="h-8.75 w-8 rounded-md"
                             />
                           ))}
                       </div>

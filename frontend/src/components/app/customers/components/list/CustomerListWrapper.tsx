@@ -1,4 +1,4 @@
-// components/lists/TransactionListWrapper.tsx
+// components/lists/CustomerListWrapper.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -8,57 +8,53 @@ import useHttpDelete from "@/api/useHttpDelete";
 
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { TransactionTable } from "@/components/app/transactions/components/list/TransactionTable";
-import { Transaction } from "@/types/Transaction";
+import { CustomerTable } from "./CustomerTable";
 
 interface Props {
-  currency: string;
   title?: string;
   baseUrl?: string;
   defaultRows?: number;
   queryParams?: string;
 }
 
-export default function TransactionListWrapper({
-  currency,
-  title = "Transactions",
-  baseUrl = "/api/transactions",
-  defaultRows = 5,
+export default function CustomerListWrapper({
+  title = "Customers",
+  defaultRows = 25,
+  baseUrl = "/api/customers",
   queryParams = "",
 }: Readonly<Props>) {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState(defaultRows);
 
-  const query = useHttpGet<PagableResourceWrapper<Transaction[]>>(
-    `${baseUrl}?per_page=${rows}&page=${page}&currency=${currency}${queryParams}`
+  const query = useHttpGet<PagableResourceWrapper<Customer[]>>(
+    `${baseUrl}?per_page=${rows}&page=${page}${queryParams}`
   );
-
   if (query.error) {
-    toast.error(query.error.message || "Failed to load transactions.");
+    toast.error(query.error.message || "Failed to load customers.");
     console.error(query.error);
   }
 
   const deleteMutation = useHttpDelete(baseUrl, query);
 
-  const handleView = (transaction: Transaction) => {
-    navigate(`/app/transactions/${transaction.id}`);
+  const handleView = (customer: Customer) => {
+    navigate(`/app/customers/${customer.id}`);
   };
 
   const handleCreate = () => {
-    navigate("/app/transactions/new");
+    navigate("/app/customers/new");
   };
 
-  const handleDelete = async (transaction: Transaction) => {
+  const handleDelete = async (customer: Customer) => {
     try {
-      await deleteMutation.mutateAsync(transaction.id);
-      toast.success("Transaction deleted successfully");
+      await deleteMutation.mutateAsync(customer.id);
+      toast.success("Customer deleted successfully");
       await query.refetch();
     } catch (error: any) {
       toast.error(
         error?.response?.data?.message ??
           error?.message ??
-          "Failed to delete transaction"
+          "Failed to delete customer"
       );
       console.error(error);
     }
@@ -70,11 +66,11 @@ export default function TransactionListWrapper({
         <h1 className="text-2xl font-semibold">{title}</h1>
         <Button className="bg-p300 text-n0" onClick={handleCreate}>
           <Plus className="w-4 h-4 mr-2" />
-          Add new transaction
+          Add new customer
         </Button>
       </div>
       <div className="bg-white rounded-lg shadow">
-        <TransactionTable
+        <CustomerTable
           value={query.data?.data ?? []}
           loading={query.isLoading || query.isFetching}
           title={title}

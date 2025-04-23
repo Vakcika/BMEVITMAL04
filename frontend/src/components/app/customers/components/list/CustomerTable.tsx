@@ -14,17 +14,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DeleteActionButton } from "./actions/DeleteActionButton";
-import { ViewActionButton } from "./actions/ViewActionButton";
+import CustomerStatusBadge from "@/components/common/badges/CustomerStatusBadge";
+import EmailLink from "@/components/common/links/EmailLink";
+import PhoneLink from "@/components/common/links/PhoneLink";
+import UserAvatar from "@/components/common/UserAvatar";
+import { DeleteActionButton } from "@/components/tables/actions/DeleteActionButton";
+import { ViewActionButton } from "@/components/tables/actions/ViewActionButton";
 import {
   CustomPaginationProps,
   PaginationControls,
-} from "./PaginationControls";
-import PhoneLink from "../common/links/PhoneLink";
-import EmailLink from "../common/links/EmailLink";
-import { TableSkeleton } from "./TableSkeleton";
-import CustomerStatusBadge from "../common/badges/CustomerStatusBadge";
-import UserAvatar from "../common/UserAvatar";
+} from "@/components/tables/PaginationControls";
+import { TableSkeleton } from "@/components/tables/TableSkeleton";
 
 interface TableProps {
   value: Customer[];
