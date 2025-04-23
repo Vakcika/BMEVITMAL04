@@ -16,8 +16,11 @@ class TransactionController extends Controller
     {
         $validated = $request->validate([
             'currency' => 'nullable|string|exists:currencies,code',
+            'customer' => 'nullable|string|exists:customers,id',
             'sort_by' => 'nullable|in:amount,amount_in_base,transaction_date,created_at,updated_at',
             'sort_dir' => 'nullable|in:asc,desc',
+            'per_page' => 'nullable|integer|min:1|max:100',
+            'page' => 'nullable|integer|min:1',
         ]);
 
         $query = Transaction::query();
@@ -25,6 +28,12 @@ class TransactionController extends Controller
         if (!empty($validated['currency'])) {
             $query->whereHas('currency', function ($q) use ($validated) {
                 $q->where('code', $validated['currency']);
+            });
+        }
+
+         if (!empty($validated['customer'])) {
+            $query->whereHas('customer', function ($q) use ($validated) {
+                $q->where('id', $validated['customer']);
             });
         }
 
@@ -37,8 +46,8 @@ class TransactionController extends Controller
             $query->orderBy($validated['sort_by'] ?? 'transaction_date', $validated['sort_dir'] ?? 'desc');
         }
 
-        $perPage = $request->query('per_page', 10);
-        $page = $request->query('page', 1);
+        $perPage = $validated['per_page'] ?? 10;
+        $page = $validated['page'] ?? 1;
 
         $transactions = $query->paginate($perPage, ['*'], 'page', $page);
 

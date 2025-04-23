@@ -8,10 +8,12 @@ import CustomBreadCrumb from "@/components/common/CustomBreadcrumb";
 import ViewCustomerHeader from "./components/view/ViewCustomerHeader";
 import CustomerDetailsCard from "./components/view/CustomerDatilsCard";
 import CustomerExtraInfoCard from "./components/view/CustomerExtraInfoCard";
+import TransactionListWrapper from "../transactions/components/list/TransactionListWrapper";
 
 export default function ViewCustomer() {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const [customer, setCustomer] = useState<Customer | null>(null);
 
   const query = useHttpGet<{ data: Customer }>(`/api/customers/${id}`);
@@ -64,6 +66,22 @@ export default function ViewCustomer() {
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-6">
         <CustomerDetailsCard customer={customer} />
         <CustomerExtraInfoCard customer={customer} />
+
+        <TransactionListWrapper
+          currency="HUF"
+          title="HUF Transactions"
+          queryParams={"&customer=" + customer.id}
+        />
+        <TransactionListWrapper
+          currency="EUR"
+          title="EUR Transactions"
+          queryParams={"&customer=" + customer.id}
+        />
+        <TransactionListWrapper
+          currency="USD"
+          title="USD Transactions"
+          queryParams={"&customer=" + customer.id}
+        />
       </div>
     </div>
   );

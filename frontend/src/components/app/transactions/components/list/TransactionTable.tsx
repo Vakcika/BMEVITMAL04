@@ -81,65 +81,69 @@ export const TransactionTable = ({
           </Select>
         )}
       </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Customer</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Amount</TableHead>
-              <TableHead>Note</TableHead>
-              <TableHead>Transaction Date</TableHead>
-              <TableHead>Payment Status</TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {value?.map((transaction) => (
-              <TableRow key={transaction.id}>
-                <TableCell>{transaction.id.substring(0, 8)}</TableCell>
-                <TableCell className="font-medium">
-                  {transaction.customer?.company_name}
-                </TableCell>
-                <TableCell>
-                  <TransactionTypeBadge type={transaction?.transaction_type} />
-                </TableCell>
-                <TableCell className="text-center">
-                  {transaction.currency?.symbol}
-                  {transaction.amount}
-                </TableCell>
-                <TableCell>{transaction.note}</TableCell>
-                <TableCell>
-                  {transaction.transaction_date
-                    ? new Date(
-                        transaction.transaction_date
-                      ).toLocaleDateString()
-                    : "N/A"}
-                </TableCell>
-                <TableCell>
-                  <PaymentStatusBadge transaction={transaction} />
-                </TableCell>
-                <TableCell>
-                  <div className="flex space-x-2">
-                    <ViewActionButton item={transaction} onClick={onView} />
-                    {onDelete && (
-                      <DeleteActionButton
-                        item={transaction}
-                        itemName="transaction"
-                        itemLabel={`Transaction #${transaction.id.substring(
-                          0,
-                          8
-                        )}`}
-                        onDelete={onDelete}
-                      />
-                    )}
-                  </div>
-                </TableCell>
+      <CardContent className="flex flex-col min-h-84">
+        <div className="flex-1 overflow-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>ID</TableHead>
+                <TableHead>Customer</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead>Amount</TableHead>
+                <TableHead>Note</TableHead>
+                <TableHead>Transaction Date</TableHead>
+                <TableHead>Payment Status</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {value?.map((transaction) => (
+                <TableRow key={transaction.id}>
+                  <TableCell>{transaction.id.substring(0, 8)}</TableCell>
+                  <TableCell className="font-medium">
+                    {transaction.customer?.company_name}
+                  </TableCell>
+                  <TableCell>
+                    <TransactionTypeBadge
+                      type={transaction?.transaction_type}
+                    />
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {transaction.currency?.symbol}
+                    {transaction.amount}
+                  </TableCell>
+                  <TableCell>{transaction.note}</TableCell>
+                  <TableCell>
+                    {transaction.transaction_date
+                      ? new Date(
+                          transaction.transaction_date
+                        ).toLocaleDateString()
+                      : "N/A"}
+                  </TableCell>
+                  <TableCell>
+                    <PaymentStatusBadge transaction={transaction} />
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex space-x-2">
+                      <ViewActionButton item={transaction} onClick={onView} />
+                      {onDelete && (
+                        <DeleteActionButton
+                          item={transaction}
+                          itemName="transaction"
+                          itemLabel={`Transaction #${transaction.id.substring(
+                            0,
+                            8
+                          )}`}
+                          onDelete={onDelete}
+                        />
+                      )}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
         {paginationProps && (
           <PaginationControls
             totalRecords={paginationProps?.totalRecords}

@@ -50,44 +50,46 @@ export const TableSkeleton = ({
           )}
         </CardHeader>
       )}
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              {columns.map((_, index) => (
-                <TableHead key={`header-${index}`}>
-                  <Skeleton className="h-4 w-24" />
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {rows.map((_, rowIndex) => (
-              <TableRow key={`row-${rowIndex}`}>
-                {columns.map((_, colIndex) => (
-                  <TableCell key={`cell-${rowIndex}-${colIndex}`}>
-                    {colIndex === columnCount - 1 && showActions ? (
-                      <div className="flex space-x-2">
-                        {Array(actionCount)
-                          .fill(0)
-                          .map((_, actionIndex) => (
-                            <Skeleton
-                              key={`action-${rowIndex}-${actionIndex}`}
-                              className="h-8.75 w-8 rounded-md"
-                            />
-                          ))}
-                      </div>
-                    ) : (
-                      <Skeleton
-                        className={`h-4 ${normalizedColumnWidths[colIndex]}`}
-                      />
-                    )}
-                  </TableCell>
+      <CardContent className="flex flex-col min-h-80">
+        <div className="flex-1 overflow-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                {columns.map((_, index) => (
+                  <TableHead key={`header-${index}`}>
+                    <Skeleton className="h-4 w-24" />
+                  </TableHead>
                 ))}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {rows.map((_, rowIndex) => (
+                <TableRow key={`row-${rowIndex}`}>
+                  {columns.map((_, colIndex) => (
+                    <TableCell key={`cell-${rowIndex}-${colIndex}`}>
+                      {colIndex === columnCount - 1 && showActions ? (
+                        <div className="flex space-x-2">
+                          {Array(actionCount)
+                            .fill(0)
+                            .map((_, actionIndex) => (
+                              <Skeleton
+                                key={`action-${rowIndex}-${actionIndex}`}
+                                className="h-8 w-8 rounded-md"
+                              />
+                            ))}
+                        </div>
+                      ) : (
+                        <Skeleton
+                          className={`h-4 ${normalizedColumnWidths[colIndex]}`}
+                        />
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
         {showPagination && (
           <div className="mt-4 flex items-center justify-center">
             <div className="flex items-center space-x-2">

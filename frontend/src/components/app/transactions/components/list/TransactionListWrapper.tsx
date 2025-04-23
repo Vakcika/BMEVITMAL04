@@ -73,7 +73,7 @@ export default function TransactionListWrapper({
           Add new transaction
         </Button>
       </div>
-      <div className="bg-white rounded-lg shadow">
+      <div>
         <TransactionTable
           value={query.data?.data ?? []}
           loading={query.isLoading || query.isFetching}
