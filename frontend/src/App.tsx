@@ -9,9 +9,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@webbydevs/react-laravel-sanctum-auth";
 import { Toaster } from "sonner";
 import useIsAuthenticated from "./auth/useIsAuthenticated";
-import Customers from "./app/customers/ListCustomers";
-import CustomerView from "./app/customers/ViewCustomer";
-import CustomerForm from "./app/customers/EditCustomer";
+import ListCustomers from "./app/customers/ListCustomers";
+import ViewCustomer from "./app/customers/ViewCustomer";
+import EditCustomer from "./app/customers/EditCustomer";
+import ListTransactions from "./app/transactions/ListTransactions";
+import EditTransaction from "./app/transactions/EditTransaction";
+import ViewTransaction from "./app/transactions/ViewTransaction";
 
 const authConfig = {
   baseUrl: import.meta.env.VITE_API_URL,
@@ -47,17 +50,30 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/app" element={<AppLayout />}>
                 <Route path="dashboard" element={<Page404 />} />
-                <Route path="customers" element={<Customers />} />
+                <Route path="customers" element={<ListCustomers />} />
                 <Route
                   path="/app/customers/new"
-                  element={<CustomerForm isNew={true} />}
+                  element={<EditCustomer isNew={true} />}
                 />
-                <Route path="/app/customers/:id" element={<CustomerView />} />
+                <Route path="/app/customers/:id" element={<ViewCustomer />} />
                 <Route
                   path="/app/customers/:id/edit"
-                  element={<CustomerForm />}
+                  element={<EditCustomer />}
                 />
-                <Route path="finance" element={<Page404 />} />
+                <Route path="transactions" element={<ListTransactions />} />
+                <Route
+                  path="/app/transactions/new"
+                  element={<EditTransaction isNew={true} />}
+                />
+                <Route
+                  path="/app/transactions/:id"
+                  element={<ViewTransaction />}
+                />
+                <Route
+                  path="/app/transactions/:id/edit"
+                  element={<EditTransaction />}
+                />
+                <Route path="subscriptions" element={<Page404 />} />
               </Route>
               <Route path="*" element={<Page404 />} />
             </Routes>

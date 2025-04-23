@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use App\Http\Resources\TransactionResource;
+use App\Http\Requests\TransactionRequest;
 
 class TransactionController extends Controller
 {
@@ -12,17 +14,44 @@ class TransactionController extends Controller
      */
     public function index(Request $request)
     {
+        $validated = $request->validate([
+            'currency' => 'nullable|string|exists:currencies,code',
+            'sort_by' => 'nullable|in:amount,amount_in_base,transaction_date,created_at,updated_at',
+            'sort_dir' => 'nullable|in:asc,desc',
+        ]);
+
+        $query = Transaction::query();
+
+        if (!empty($validated['currency'])) {
+            $query->whereHas('currency', function ($q) use ($validated) {
+                $q->where('code', $validated['currency']);
+            });
+        }
+
+        if (!empty($validated['sort_by'])) {
+            $query->orderBy(
+                $validated['sort_by'],
+                $validated['sort_dir'] ?? 'asc'
+            );
+        } else{
+            $query->orderBy($validated['sort_by'] ?? 'transaction_date', $validated['sort_dir'] ?? 'desc');
+        }
+
         $perPage = $request->query('per_page', 10);
         $page = $request->query('page', 1);
-        return Transaction::paginate($perPage, ['*'], 'page', $page);
+
+        $transactions = $query->paginate($perPage, ['*'], 'page', $page);
+
+        return TransactionResource::collection($transactions);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TransactionRequest $request)
     {
-        return Transaction::create($request->validated());
+        $validated = $request->validated();
+        return Transaction::create($validated);
     }
 
     /**
@@ -30,13 +59,13 @@ class TransactionController extends Controller
      */
     public function show(string $id)
     {
-        return Transaction::findOrFail($id);
+        return new TransactionResource(Transaction::findOrFail($id));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(TransactionRequest $request, string $id)
     {
         $transaction = Transaction::findOrFail($id);
         $transaction->update($request->validated());
