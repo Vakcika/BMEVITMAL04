@@ -1,6 +1,5 @@
-// components/lists/TransactionListWrapper.tsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 
 import useHttpGet from "@/api/useHttpGet";
@@ -28,8 +27,10 @@ export default function TransactionListWrapper({
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState(defaultRows);
 
+  const [searchParams] = useSearchParams();
+  const queryString = searchParams.toString();
   const query = useHttpGet<PagableResourceWrapper<Transaction[]>>(
-    `${baseUrl}?per_page=${rows}&page=${page}${queryParams}`
+    `${baseUrl}?per_page=${rows}&page=${page}${queryParams}&${queryString}`
   );
 
   if (query.error) {

@@ -24,6 +24,7 @@ import { TableSkeleton } from "../../../../tables/TableSkeleton";
 import TransactionTypeBadge from "@/components/common/badges/TransactionTypeBadge";
 import PaymentStatusBadge from "@/components/common/badges/PaymentStatusBadge";
 import { Transaction } from "@/types/Transaction";
+import TransactionFilters from "./TransactionFilters";
 
 interface TableProps {
   value: Transaction[];
@@ -63,23 +64,29 @@ export const TransactionTable = ({
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>{title}</CardTitle>
-        {paginationProps && (
-          <Select
-            value={paginationProps.rows.toString()}
-            onValueChange={(value) => paginationProps.setRows(Number(value))}
-          >
-            <SelectTrigger className="w-[140px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {pageSizeOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value.toString()}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        )}
+        <div className="flex flex-wrap justify-between gap-4">
+          <TransactionFilters />
+          {paginationProps && (
+            <Select
+              value={paginationProps.rows.toString()}
+              onValueChange={(value) => paginationProps.setRows(Number(value))}
+            >
+              <SelectTrigger className="w-[140px]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {pageSizeOptions.map((option) => (
+                  <SelectItem
+                    key={option.value}
+                    value={option.value.toString()}
+                  >
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+        </div>
       </CardHeader>
       <CardContent className="flex flex-col min-h-84">
         <div className="flex-1 overflow-auto">
