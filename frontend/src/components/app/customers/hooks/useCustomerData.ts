@@ -38,8 +38,7 @@ export default function useCustomerData(isNew: boolean) {
 
   return {
     id,
-    customerData: query.data?.data || initialValues,
+    customerData: (!isNew && query.data?.data) || initialValues,
     isLoading: query.isLoading,
-    error: query.error,
   };
 }
