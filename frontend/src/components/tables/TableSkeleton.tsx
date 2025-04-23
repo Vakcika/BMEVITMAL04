@@ -89,10 +89,11 @@ export const TableSkeleton = ({
           </TableBody>
         </Table>
         {showPagination && (
-          <div className="mt-4 flex items-center justify-between">
-            <Skeleton className="h-8 w-32" />
+          <div className="mt-4 flex items-center justify-center">
             <div className="flex items-center space-x-2">
               <Skeleton className="h-8 w-8 rounded-md" />
+              <Skeleton className="h-8 w-8 rounded-md" />
+              <Skeleton className="h-8 w-12 rounded-md" />
               <Skeleton className="h-8 w-8 rounded-md" />
               <Skeleton className="h-8 w-8 rounded-md" />
             </div>
