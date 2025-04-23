@@ -7,10 +7,10 @@ import { Transaction } from "@/types/Transaction";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import ViewTransactionHeader from "./ViewTransactionHeader";
-import AdditionalInfoCard from "./AdditionalInfoCard";
-import CustomerInfoCard from "./CustomerInfoCard";
-import TransactionDetailsCard from "./TransactionDetailsCard";
+import ViewTransactionHeader from "./components/view/ViewTransactionHeader";
+import AdditionalInfoCard from "./components/view/AdditionalInfoCard";
+import CustomerInfoCard from "./components/view/CustomerInfoCard";
+import TransactionDetailsCard from "./components/view/TransactionDetailsCard";
 
 export default function ViewTransaction() {
   const { id } = useParams();

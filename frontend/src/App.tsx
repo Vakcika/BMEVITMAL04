@@ -9,12 +9,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@webbydevs/react-laravel-sanctum-auth";
 import { Toaster } from "sonner";
 import useIsAuthenticated from "./auth/useIsAuthenticated";
-import ListCustomers from "./app/customers/ListCustomers";
-import ViewCustomer from "./app/customers/ViewCustomer";
-import EditCustomer from "./app/customers/EditCustomer";
-import ListTransactions from "./app/transactions/ListTransactions";
-import EditTransaction from "./app/transactions/EditTransaction";
-import ViewTransaction from "./app/transactions/ViewTransaction";
+import ListCustomers from "./components/app/customers/ListCustomers";
+import ViewCustomer from "./components/app/customers/ViewCustomer";
+import EditCustomer from "./components/app/customers/EditCustomer";
+import ListTransactions from "./components/app/transactions/ListTransactions";
+import EditTransaction from "./components/app/transactions/EditTransaction";
+import ViewTransaction from "./components/app/transactions/ViewTransaction";
 
 const authConfig = {
   baseUrl: import.meta.env.VITE_API_URL,

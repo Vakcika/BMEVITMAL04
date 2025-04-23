@@ -1,0 +1,175 @@
+import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { Formik, Form, FormikHelpers } from "formik";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import CustomBreadCrumb from "@/components/common/CustomBreadcrumb";
+import LoadingCircle from "@/components/common/LoadingCircle";
+import { Transaction } from "@/types/Transaction";
+import BasicInformation from "./components/edit/BasicInformation.tsx";
+import Dates from "./components/edit/Dates.tsx";
+import FinancialDetails from "./components/edit/FinancialDetails.tsx";
+import Note from "./components/edit/Note.tsx";
+import { useTransactionData } from "./hooks/useTransactionData.tsx";
+import { useTransactionMutations } from "./hooks/useTransactionDataMutation.tsx";
+import { TransactionSchema } from "../validationSchemas.tsx";
+
+interface EditTransactionProps {
+  isNew?: boolean;
+}
+
+export default function EditTransaction({
+  isNew = false,
+}: Readonly<EditTransactionProps>) {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+
+  const {
+    initialValues,
+    isLoading,
+    customers,
+    currencies,
+    transactionTypes,
+    subscriptions,
+  } = useTransactionData(isNew, id);
+
+  const { createTransaction, updateTransaction } = useTransactionMutations();
+
+  const handleSubmit = async (
+    values: Transaction,
+    { setSubmitting }: FormikHelpers<Transaction>
+  ) => {
+    try {
+      if (isNew) {
+        const { data } = await createTransaction(values);
+        toast.success("Transaction created successfully");
+        if (data) {
+          navigate(`/app/transactions/${data.id}`);
+        } else {
+          navigate("/app/transactions");
+        }
+      } else {
+        await updateTransaction(values);
+        toast.success("Transaction updated successfully");
+        navigate(`/app/transactions/${id}`);
+      }
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.message ?? error?.message ?? "Failed to save"
+      );
+      console.error(error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleCancel = () => {
+    if (isNew) {
+      navigate("/app/transactions");
+    } else {
+      navigate(`/app/transactions/${id}`);
+    }
+  };
+
+  const breadcrumbs = [
+    { label: "Transactions", url: "/app/transactions" },
+    {
+      label: isNew ? "New Transaction" : `#${id?.substring(0, 8)}`,
+      url: isNew ? "" : `/app/transactions/${id}`,
+    },
+  ];
+
+  if (!isNew && isLoading) {
+    return <LoadingCircle />;
+  }
+
+  return (
+    <div className="p-4">
+      <CustomBreadCrumb model={breadcrumbs} />
+      <div className="mt-6 mb-4 flex justify-between items-center">
+        <h1 className="text-2xl font-semibold">
+          {isNew ? "Create Transaction" : `Edit: #${id?.substring(0, 8)}`}
+        </h1>
+      </div>
+
+      <Card className="bg-white rounded-lg shadow">
+        <CardHeader>
+          <CardTitle>Transaction Information</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Formik<Transaction>
+            initialValues={initialValues}
+            validationSchema={TransactionSchema}
+            onSubmit={handleSubmit}
+            enableReinitialize
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              isSubmitting,
+              setFieldValue,
+            }) => (
+              <Form className="space-y-6">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-3 xl:grid-cols-4">
+                  <BasicInformation
+                    values={values}
+                    errors={errors}
+                    touched={touched}
+                    setFieldValue={setFieldValue}
+                    customers={customers}
+                    transactionTypes={transactionTypes}
+                    subscriptions={subscriptions}
+                  />
+
+                  <FinancialDetails
+                    values={values}
+                    errors={errors}
+                    touched={touched}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    setFieldValue={setFieldValue}
+                    currencies={currencies}
+                  />
+
+                  <Dates
+                    values={values}
+                    errors={errors}
+                    touched={touched}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                  />
+
+                  <Note
+                    values={values}
+                    errors={errors}
+                    touched={touched}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                  />
+                </div>
+
+                <div className="flex justify-end space-x-2 pt-4">
+                  <Button type="button" variant="ghost" onClick={handleCancel}>
+                    Cancel
+                  </Button>
+                  <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting
+                      ? isNew
+                        ? "Creating..."
+                        : "Saving..."
+                      : isNew
+                      ? "Create Transaction"
+                      : "Save Changes"}
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
