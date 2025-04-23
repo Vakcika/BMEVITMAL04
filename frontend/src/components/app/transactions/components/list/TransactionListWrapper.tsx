@@ -21,7 +21,7 @@ interface Props {
 export default function TransactionListWrapper({
   title = "Transactions",
   baseUrl = "/api/transactions",
-  defaultRows = 5,
+  defaultRows = 25,
   queryParams = "",
 }: Readonly<Props>) {
   const navigate = useNavigate();

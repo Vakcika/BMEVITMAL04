@@ -69,6 +69,7 @@ export default function ViewCustomer() {
       </div>
       <TransactionListWrapper
         title="Transactions"
+        defaultRows={5}
         queryParams={"&customer=" + customer.id}
       />
     </div>
