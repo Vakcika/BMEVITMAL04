@@ -14,13 +14,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DeleteActionButton } from "./actions/DeleteActionButton";
-import { ViewActionButton } from "./actions/ViewActionButton";
+import { DeleteActionButton } from "../../../../tables/actions/DeleteActionButton";
+import { ViewActionButton } from "../../../../tables/actions/ViewActionButton";
 import {
   CustomPaginationProps,
   PaginationControls,
-} from "./PaginationControls";
-import { TableSkeleton } from "./TableSkeleton";
+} from "../../../../tables/PaginationControls";
+import { TableSkeleton } from "../../../../tables/TableSkeleton";
 import TransactionTypeBadge from "@/components/common/badges/TransactionTypeBadge";
 import PaymentStatusBadge from "@/components/common/badges/PaymentStatusBadge";
 import { Transaction } from "@/types/Transaction";
