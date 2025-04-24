@@ -18,7 +18,9 @@ export default function useCustomerFormOptions() {
   return {
     statuses: statusesQuery.data || [],
     users: usersQuery.data || [],
-    statusesLoading: statusesQuery.isLoading,
-    usersLoading: usersQuery.isLoading,
+    isLoading: {
+      statusesLoading: statusesQuery.isLoading,
+      usersLoading: usersQuery.isLoading,
+    },
   };
 }

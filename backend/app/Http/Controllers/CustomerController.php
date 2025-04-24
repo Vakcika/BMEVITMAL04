@@ -15,12 +15,36 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->query('per_page', 10);
-        $page = $request->query('page', 1);
+        $validated = $request->validate([
+            'user' => 'nullable|string|exists:users,name',
+            'status' => 'nullable|string|exists:customer_statuses,name',
+            'sort_by' => 'nullable|in:amount,amount_in_base,transaction_date,created_at,updated_at',
+            'sort_dir' => 'nullable|in:asc,desc',
+            'per_page' => 'nullable|integer|min:1|max:100',
+            'page' => 'nullable|integer|min:1',
+        ]);
 
-        $customers = Customer::paginate($perPage, ['*'], 'page', $page);
+        $query = Customer::query();
 
-        return CustomerResource::collection($customers);
+        if (!empty($validated['status'])) {
+            $query->whereHas('status', function ($q) use ($validated) {
+                $q->where('name', $validated['status']);
+            });
+        }
+
+        if (!empty($validated['user'])) {
+            $query->whereHas('user', function ($q) use ($validated) {
+                $q->where('name', $validated['user']);
+            });
+        }
+        $query->orderBy($validated['sort_by'] ?? 'id', $validated['sort_dir'] ?? 'desc');
+
+        $perPage = $validated['per_page'] ?? 10;
+        $page = $validated['page'] ?? 1;
+
+        $transactions = $query->paginate($perPage, ['*'], 'page', $page);
+
+        return CustomerResource::collection($transactions);
     }
 
 

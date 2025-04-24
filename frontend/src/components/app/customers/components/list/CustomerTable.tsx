@@ -25,6 +25,7 @@ import {
   PaginationControls,
 } from "@/components/tables/PaginationControls";
 import { TableSkeleton } from "@/components/tables/TableSkeleton";
+import CustomerFilters from "./CustomerFilters";
 
 interface TableProps {
   value: Customer[];
@@ -64,23 +65,29 @@ export const CustomerTable = ({
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>{title}</CardTitle>
-        {paginationProps && (
-          <Select
-            value={paginationProps.rows.toString()}
-            onValueChange={(value) => paginationProps.setRows(Number(value))}
-          >
-            <SelectTrigger className="w-[140px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {pageSizeOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value.toString()}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        )}
+        <div className="grid grid-cols-1 lg:grid-cols-3 justify-items-end gap-4">
+          <CustomerFilters />
+          {paginationProps && (
+            <Select
+              value={paginationProps.rows.toString()}
+              onValueChange={(value) => paginationProps.setRows(Number(value))}
+            >
+              <SelectTrigger className="w-[140px]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {pageSizeOptions.map((option) => (
+                  <SelectItem
+                    key={option.value}
+                    value={option.value.toString()}
+                  >
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+        </div>
       </CardHeader>
       <CardContent>
         <Table>
