@@ -24,7 +24,7 @@ class LogRequest extends FormRequest
         return [
             'customer_id' => 'required|exists:customers,id',
             'user_id' => 'required|exists:users,id',
-            'type' => 'required|exists:log_statuses,id',
+            'type_id' => 'required|exists:log_types,id',
             'follow_up_date' => 'nullable|date',
             'description' => 'nullable|string',
         ];

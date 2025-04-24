@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\LogStatus;
+use App\Models\LogType;
 
-class LogStatusController extends Controller
+class LogTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return LogStatus::all();
+        return LogType::all();
     }
 
     /**
@@ -20,7 +20,7 @@ class LogStatusController extends Controller
      */
     public function store(Request $request)
     {
-        return LogStatus::create($request->validated());
+        return LogType::create($request->validated());
     }
 
     /**
@@ -28,7 +28,7 @@ class LogStatusController extends Controller
      */
     public function show(string $id)
     {
-        return LogStatus::findOrFail($id);
+        return LogType::findOrFail($id);
     }
 
     /**
@@ -36,7 +36,7 @@ class LogStatusController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $type = LogStatus::findOrFail($id);
+        $type = LogType::findOrFail($id);
         $type->update($request->validated());
         return $type;
     }
@@ -46,7 +46,7 @@ class LogStatusController extends Controller
      */
     public function destroy(string $id)
     {
-        $type = LogStatus::findOrFail($id);
+        $type = LogType::findOrFail($id);
         $type->delete();
         return response()->json(['message' => 'Log status deleted.']);
     }

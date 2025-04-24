@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
             CurrencySeeder::class,
             BillingCycleSeeder::class,
             CustomerStatusSeeder::class,
-            LogStatusSeeder::class,
+            LogTypeSeeder::class,
             TransactionTypeSeeder::class,
             UserSeeder::class,
             CustomerSeeder::class,

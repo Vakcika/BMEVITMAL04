@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LogStatus extends Model
+class LogType extends Model
 {
     public $timestamps = false;
 

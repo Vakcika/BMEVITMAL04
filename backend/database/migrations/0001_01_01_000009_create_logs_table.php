@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('type')->constrained('log_statuses')->onDelete('cascade');
+            $table->foreignId('type_id')->constrained('log_types')->onDelete('cascade');
             $table->dateTime('follow_up_date')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

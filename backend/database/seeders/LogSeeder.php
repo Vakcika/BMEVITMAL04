@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
 use App\Models\User;
-use App\Models\LogStatus;
+use App\Models\LogType;
 use Carbon\Carbon;
 use Faker\Factory as Faker;
 
@@ -23,13 +23,13 @@ class LogSeeder extends Seeder
 
         $customers = Customer::pluck('id');
         $users = User::pluck('id');
-        $statuses = LogStatus::pluck('id');
+        $statuses = LogType::pluck('id');
 
         foreach (range(1, 50) as $i) {
             DB::table('logs')->insert([
                 'customer_id' => $faker->randomElement($customers),
                 'user_id' => $faker->randomElement($users),
-                'type' => $faker->randomElement($statuses),
+                'type_id' => $faker->randomElement($statuses),
                 'follow_up_date' => $faker->optional()->dateTimeBetween('+1 days', '+2 months'),
                 'description' => $faker->sentence,
                 'created_at' => Carbon::now(),

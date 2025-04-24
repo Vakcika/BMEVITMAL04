@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Log extends Model
 {
-   protected $fillable = [
+    protected $fillable = [
         'customer_id',
         'user_id',
-        'type',
+        'type_id',
         'follow_up_date',
         'description',
     ];
@@ -24,8 +24,8 @@ class Log extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function status()
+    public function type()
     {
-        return $this->belongsTo(LogStatus::class, 'type');
+        return $this->belongsTo(LogType::class, 'type_id');
     }
 }

@@ -8,7 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\CustomerStatusController;
-use App\Http\Controllers\LogStatusController;
+use App\Http\Controllers\LogTypeController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionTypeController;
 use App\Http\Controllers\CurrencyController;
@@ -61,11 +61,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/customer-statuses/{id}', [CustomerStatusController::class, 'destroy']);
 
     // Log Statuses
-    Route::get('/log-statuses', [LogStatusController::class, 'index']);
-    Route::post('/log-statuses', [LogStatusController::class, 'store']);
-    Route::get('/log-statuses/{id}', [LogStatusController::class, 'show']);
-    Route::put('/log-statuses/{id}', [LogStatusController::class, 'update']);
-    Route::delete('/log-statuses/{id}', [LogStatusController::class, 'destroy']);
+    Route::get('/log-statuses', [LogTypeController::class, 'index']);
+    Route::post('/log-statuses', [LogTypeController::class, 'store']);
+    Route::get('/log-statuses/{id}', [LogTypeController::class, 'show']);
+    Route::put('/log-statuses/{id}', [LogTypeController::class, 'update']);
+    Route::delete('/log-statuses/{id}', [LogTypeController::class, 'destroy']);
 
     // Transactions
     Route::get('/transactions', [TransactionController::class, 'index']);
