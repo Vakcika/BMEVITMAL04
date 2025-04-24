@@ -8,7 +8,7 @@ class Subscription extends Model
 {
     protected $fillable = [
         'customer_id',
-        'billing_cycle',
+        'billing_cycle_id',
         'currency_id',
         'name',
         'amount',
@@ -23,7 +23,7 @@ class Subscription extends Model
 
     public function billingCycle()
     {
-        return $this->belongsTo(BillingCycle::class, 'billing_cycle');
+        return $this->belongsTo(BillingCycle::class);
     }
 
     public function currency()

@@ -29,7 +29,7 @@ class SubscriptionSeeder extends Seeder
 
             DB::table('subscriptions')->insert([
                 'customer_id' => $faker->randomElement($customers),
-                'billing_cycle' => $faker->randomElement($billingCycles),
+                'billing_cycle_id' => $faker->randomElement($billingCycles),
                 'currency_id' => $faker->randomElement($currencies),
                 'name' => $faker->word . ' Plan',
                 'amount' => $faker->randomFloat(2, 10, 500),

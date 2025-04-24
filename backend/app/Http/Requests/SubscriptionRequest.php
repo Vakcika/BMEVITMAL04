@@ -23,7 +23,7 @@ class SubscriptionRequest extends FormRequest
     {
         return [
             'customer_id' => 'required|exists:customers,id',
-            'billing_cycle' => 'required|exists:billing_cycles,id',
+            'billing_cycle_id' => 'required|exists:billing_cycles,id',
             'currency_id' => 'required|exists:currencies,id',
             'name' => 'required|string|max:55',
             'amount' => 'required|numeric|min:0',

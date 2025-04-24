@@ -24,8 +24,8 @@ export default function SubscriptionFilters() {
   return (
     <>
       <Select
-        value={searchParams.get("customer_id") ?? "all"}
-        onValueChange={(value) => updateParam("customer_id", value)}
+        value={searchParams.get("customer") ?? "all"}
+        onValueChange={(value) => updateParam("customer", value)}
         disabled={isLoading.currencies}
       >
         <SelectTrigger className="w-[160px]">
@@ -35,14 +35,14 @@ export default function SubscriptionFilters() {
           <SelectItem value="all">All customers</SelectItem>
           {customers.map((data) => (
             <SelectItem key={data.id} value={data.id.toString()}>
-              {data.name}
+              {data.company_name}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
       <Select
-        value={searchParams.get("billing_cycles") ?? "all"}
-        onValueChange={(value) => updateParam("billing_cycles", value)}
+        value={searchParams.get("billing_cycle") ?? "all"}
+        onValueChange={(value) => updateParam("billing_cycle", value)}
         disabled={isLoading.billingCycles}
       >
         <SelectTrigger className="w-[160px]">

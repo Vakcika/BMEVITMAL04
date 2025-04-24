@@ -15,8 +15,8 @@ class SubscriptionController extends Controller
     public function index(Request $request)
     {
         $validated = $request->validate([
-            'user' => 'nullable|string|exists:users,name',
-            'status' => 'nullable|string|exists:customer_statuses,name',
+            'customer' => 'nullable|string|exists:customers,id',
+            'billing_cycle' => 'nullable|string|exists:billing_cycles,name',
             'sort_by' => 'nullable|in:amount,amount_in_base,transaction_date,created_at,updated_at',
             'sort_dir' => 'nullable|in:asc,desc',
             'per_page' => 'nullable|integer|min:1|max:100',
@@ -25,15 +25,15 @@ class SubscriptionController extends Controller
 
         $query = Subscription::query();
 
-        if (!empty($validated['status'])) {
-            $query->whereHas('status', function ($q) use ($validated) {
-                $q->where('name', $validated['status']);
+        if (!empty($validated['customer'])) {
+            $query->whereHas('customer', function ($q) use ($validated) {
+                $q->where('id', $validated['customer']);
             });
         }
 
-        if (!empty($validated['user'])) {
-            $query->whereHas('user', function ($q) use ($validated) {
-                $q->where('name', $validated['user']);
+        if (!empty($validated['billing_cycle'])) {
+            $query->whereHas('billingCycle', function ($q) use ($validated) {
+                $q->where('name', $validated['billing_cycle']);
             });
         }
         $query->orderBy($validated['sort_by'] ?? 'id', $validated['sort_dir'] ?? 'desc');

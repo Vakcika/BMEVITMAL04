@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
-            $table->foreignId('billing_cycle')->constrained('billing_cycles')->onDelete('cascade');
+            $table->foreignId('billing_cycle_id')->constrained('billing_cycles')->onDelete('cascade');
             $table->foreignId('currency_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->double('amount', 15, 2);
