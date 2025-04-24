@@ -31,7 +31,7 @@ export default function ViewCustomer() {
     console.error(query.error);
   }
 
-  const handleEdit = () => navigate(`/app/customers/${id}/edit`);
+  const handleEdit = () => navigate(`/app/customer/${id}/edit`);
 
   const handleDelete = async (customer: Customer) => {
     try {

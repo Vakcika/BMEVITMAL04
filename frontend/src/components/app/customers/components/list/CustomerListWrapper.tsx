@@ -39,11 +39,11 @@ export default function CustomerListWrapper({
   const deleteMutation = useHttpDelete(baseUrl, query);
 
   const handleView = (customer: Customer) => {
-    navigate(`/app/customers/${customer.id}`);
+    navigate(`/app/customer/${customer.id}`);
   };
 
   const handleCreate = () => {
-    navigate("/app/customers/new");
+    navigate("/app/customer/new");
   };
 
   const handleDelete = async (customer: Customer) => {

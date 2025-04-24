@@ -32,7 +32,7 @@ export default function ViewTransaction() {
   }, [query.data]);
 
   const handleEdit = () => {
-    navigate(`/app/transactions/${id}/edit`);
+    navigate(`/app/transaction/${id}/edit`);
   };
 
   const handleDelete = async (transaction: Transaction) => {

@@ -17,6 +17,9 @@ import EditTransaction from "./components/app/transactions/EditTransaction";
 import ViewTransaction from "./components/app/transactions/ViewTransaction";
 import Dashboard from "./components/app/dashboard/Dashboard";
 import { LogDialogProvider } from "./components/app/logs/LogDialogProvider";
+import EditSubscription from "./components/app/subscriptions/EditSubscription";
+import ViewSubscription from "./components/app/subscriptions/ViewSubscription";
+import ListSubscriptions from "./components/app/subscriptions/ListSubscriptions";
 
 const authConfig = {
   baseUrl: import.meta.env.VITE_API_URL,
@@ -55,28 +58,40 @@ function App() {
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="customers" element={<ListCustomers />} />
                   <Route
-                    path="/app/customers/new"
+                    path="/app/customer/new"
                     element={<EditCustomer isNew={true} />}
                   />
-                  <Route path="/app/customers/:id" element={<ViewCustomer />} />
+                  <Route path="/app/customer/:id" element={<ViewCustomer />} />
                   <Route
-                    path="/app/customers/:id/edit"
+                    path="/app/customer/:id/edit"
                     element={<EditCustomer />}
                   />
                   <Route path="transactions" element={<ListTransactions />} />
                   <Route
-                    path="/app/transactions/new"
+                    path="/app/transaction/new"
                     element={<EditTransaction isNew={true} />}
                   />
                   <Route
-                    path="/app/transactions/:id"
+                    path="/app/transaction/:id"
                     element={<ViewTransaction />}
                   />
                   <Route
-                    path="/app/transactions/:id/edit"
+                    path="/app/transaction/:id/edit"
                     element={<EditTransaction />}
                   />
-                  <Route path="subscriptions" element={<Page404 />} />
+                  <Route path="subscriptions" element={<ListSubscriptions />} />
+                  <Route
+                    path="/app/subscription/new"
+                    element={<EditSubscription isNew={true} />}
+                  />
+                  <Route
+                    path="/app/subscription/:id"
+                    element={<ViewSubscription />}
+                  />
+                  <Route
+                    path="/app/subscription/:id/edit"
+                    element={<EditSubscription />}
+                  />
                 </Route>
                 <Route path="*" element={<Page404 />} />
               </Routes>

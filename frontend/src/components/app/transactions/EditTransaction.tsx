@@ -41,14 +41,14 @@ export default function EditTransaction({
         const { data } = await createTransaction(values);
         toast.success("Transaction created successfully");
         if (data) {
-          navigate(`/app/transactions/${data.id}`);
+          navigate(`/app/transaction/${data.id}`);
         } else {
-          navigate("/app/transactions");
+          navigate("/app/transaction");
         }
       } else {
         await updateTransaction(values);
         toast.success("Transaction updated successfully");
-        navigate(`/app/transactions/${id}`);
+        navigate(`/app/transaction/${id}`);
       }
     } catch (error: any) {
       toast.error(
@@ -62,9 +62,9 @@ export default function EditTransaction({
 
   const handleCancel = () => {
     if (isNew) {
-      navigate("/app/transactions");
+      navigate("/app/transaction");
     } else {
-      navigate(`/app/transactions/${id}`);
+      navigate(`/app/transaction/${id}`);
     }
   };
 
@@ -72,7 +72,7 @@ export default function EditTransaction({
     { label: "Transactions", url: "/app/transactions" },
     {
       label: isNew ? "New Transaction" : `#${id?.substring(0, 8)}`,
-      url: isNew ? "" : `/app/transactions/${id}`,
+      url: isNew ? "" : `/app/transaction/${id}`,
     },
   ];
 

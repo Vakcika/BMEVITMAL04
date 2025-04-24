@@ -41,11 +41,11 @@ export default function TransactionListWrapper({
   const deleteMutation = useHttpDelete(baseUrl, query);
 
   const handleView = (transaction: Transaction) => {
-    navigate(`/app/transactions/${transaction.id}`);
+    navigate(`/app/transaction/${transaction.id}`);
   };
 
   const handleCreate = () => {
-    navigate("/app/transactions/new");
+    navigate("/app/transaction/new");
   };
 
   const handleDelete = async (transaction: Transaction) => {

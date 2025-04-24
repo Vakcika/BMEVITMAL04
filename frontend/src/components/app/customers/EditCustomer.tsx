@@ -37,14 +37,14 @@ export default function EditCustomer({
         toast.success("Customer created successfully");
 
         if (data) {
-          navigate(`/app/customers/${data.id}`);
+          navigate(`/app/customer/${data.id}`);
         } else {
-          navigate("/app/customers");
+          navigate("/app/customer");
         }
       } else {
         await updateCustomer(values);
         toast.success("Customer updated successfully");
-        navigate(`/app/customers/${id}`);
+        navigate(`/app/customer/${id}`);
       }
     } catch (error: any) {
       toast.error(
@@ -60,7 +60,7 @@ export default function EditCustomer({
     if (isNew) {
       navigate("/app/customers");
     } else {
-      navigate(`/app/customers/${id}`);
+      navigate(`/app/customer/${id}`);
     }
   };
 
@@ -68,7 +68,7 @@ export default function EditCustomer({
     { label: "Customers", url: "/app/customers" },
     {
       label: isNew ? "New Customer" : customerData.company_name,
-      url: isNew ? "" : `/app/customers/${id}`,
+      url: isNew ? "" : `/app/customer/${id}`,
     },
   ];
 

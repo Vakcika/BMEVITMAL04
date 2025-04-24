@@ -21,7 +21,7 @@ export default function CustomerInfoCard({
         <Button
           variant="outline"
           size="sm"
-          onClick={() => navigate(`/app/customers/${transaction.customer.id}`)}
+          onClick={() => navigate(`/app/customer/${transaction.customer.id}`)}
         >
           <Building className="w-4 h-4 mr-2" />
           View Customer
@@ -38,12 +38,12 @@ export default function CustomerInfoCard({
             <DetailWithIcon
               icon={<Mail className="w-6 h-6 text-n100" />}
               label="Email"
-              value={<EmailLink email={transaction.customer.email} />}
+              value={<EmailLink customer={transaction.customer} />}
             />
             <DetailWithIcon
               icon={<Phone className="w-6 h-6 text-n100" />}
               label="Phone"
-              value={<PhoneLink phone={transaction.customer.phone_number} />}
+              value={<PhoneLink customer={transaction.customer} />}
             />
           </div>
         ) : (

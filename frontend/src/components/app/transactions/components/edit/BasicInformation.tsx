@@ -1,6 +1,7 @@
 import { Transaction, TransactionType } from "@/types/Transaction";
 import { FormikErrors, FormikTouched } from "formik";
 import { FormSelect } from "../../../../common/form/FormSelect";
+import { Subscription } from "@/types/Subscription";
 
 interface BasicInformationSectionProps {
   values: Transaction;
