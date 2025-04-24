@@ -45,12 +45,12 @@ export default function CustomerDetailsCard({
           <DetailWithIcon
             icon={<Mail className="w-6 h-6 text-n100" />}
             label="Email"
-            value={<EmailLink email={customer.email} />}
+            value={<EmailLink customer={customer} />}
           />
           <DetailWithIcon
             icon={<Phone className="w-6 h-6 text-n100" />}
             label="Phone"
-            value={<PhoneLink phone={customer.phone_number} />}
+            value={<PhoneLink customer={customer} />}
           />
           <DetailWithIcon
             icon={<Globe className="w-6 h-6 text-n100" />}

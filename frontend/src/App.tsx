@@ -16,6 +16,7 @@ import ListTransactions from "./components/app/transactions/ListTransactions";
 import EditTransaction from "./components/app/transactions/EditTransaction";
 import ViewTransaction from "./components/app/transactions/ViewTransaction";
 import Dashboard from "./components/app/dashboard/Dashboard";
+import { LogDialogProvider } from "./components/app/logs/LogDialogProvider";
 
 const authConfig = {
   baseUrl: import.meta.env.VITE_API_URL,
@@ -45,40 +46,42 @@ function App() {
     <div>
       <QueryClientProvider client={queryClient}>
         <AuthProvider config={authConfig}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/app" element={<AppLayout />}>
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="customers" element={<ListCustomers />} />
-                <Route
-                  path="/app/customers/new"
-                  element={<EditCustomer isNew={true} />}
-                />
-                <Route path="/app/customers/:id" element={<ViewCustomer />} />
-                <Route
-                  path="/app/customers/:id/edit"
-                  element={<EditCustomer />}
-                />
-                <Route path="transactions" element={<ListTransactions />} />
-                <Route
-                  path="/app/transactions/new"
-                  element={<EditTransaction isNew={true} />}
-                />
-                <Route
-                  path="/app/transactions/:id"
-                  element={<ViewTransaction />}
-                />
-                <Route
-                  path="/app/transactions/:id/edit"
-                  element={<EditTransaction />}
-                />
-                <Route path="subscriptions" element={<Page404 />} />
-              </Route>
-              <Route path="*" element={<Page404 />} />
-            </Routes>
-          </BrowserRouter>
+          <LogDialogProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/app" element={<AppLayout />}>
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="customers" element={<ListCustomers />} />
+                  <Route
+                    path="/app/customers/new"
+                    element={<EditCustomer isNew={true} />}
+                  />
+                  <Route path="/app/customers/:id" element={<ViewCustomer />} />
+                  <Route
+                    path="/app/customers/:id/edit"
+                    element={<EditCustomer />}
+                  />
+                  <Route path="transactions" element={<ListTransactions />} />
+                  <Route
+                    path="/app/transactions/new"
+                    element={<EditTransaction isNew={true} />}
+                  />
+                  <Route
+                    path="/app/transactions/:id"
+                    element={<ViewTransaction />}
+                  />
+                  <Route
+                    path="/app/transactions/:id/edit"
+                    element={<EditTransaction />}
+                  />
+                  <Route path="subscriptions" element={<Page404 />} />
+                </Route>
+                <Route path="*" element={<Page404 />} />
+              </Routes>
+            </BrowserRouter>
+          </LogDialogProvider>
         </AuthProvider>
       </QueryClientProvider>
       <Toaster

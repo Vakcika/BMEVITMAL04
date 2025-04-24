@@ -1,11 +1,25 @@
-interface PhoneLinkProps {
-  phone: string | null;
-}
+import { useLogDialogContext } from "@/components/app/logs/LogDialogProvider";
 
-const PhoneLink = ({ phone }: PhoneLinkProps) => {
+
+const PhoneLink = ({ customer }: { customer?: Customer }) => {
+  const { openLogDialog } = useLogDialogContext();
+
+  if (!customer?.phone_number) return null;
+
+  const handleClick = () => {
+    openLogDialog({
+      type: "phone",
+      customer,
+    });
+  };
+
   return (
-    <a href={`tel:${phone}`} className="text-p500 hover:underline">
-      {phone}
+    <a
+      href={`tel:${customer?.phone_number}`}
+      onClick={handleClick}
+      className="text-p500 hover:underline"
+    >
+      {customer?.phone_number}
     </a>
   );
 };

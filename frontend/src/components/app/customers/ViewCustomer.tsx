@@ -9,6 +9,7 @@ import ViewCustomerHeader from "./components/view/ViewCustomerHeader";
 import CustomerDetailsCard from "./components/view/CustomerDatilsCard";
 import CustomerExtraInfoCard from "./components/view/CustomerExtraInfoCard";
 import TransactionListWrapper from "../transactions/components/list/TransactionListWrapper";
+import LogListWrapper from "../logs/list/LogListWrapper";
 
 export default function ViewCustomer() {
   const { id } = useParams();
@@ -67,6 +68,8 @@ export default function ViewCustomer() {
         <CustomerDetailsCard customer={customer} />
         <CustomerExtraInfoCard customer={customer} />
       </div>
+      <LogListWrapper customer={customer} />
+
       <TransactionListWrapper
         title="Transactions"
         defaultRows={5}

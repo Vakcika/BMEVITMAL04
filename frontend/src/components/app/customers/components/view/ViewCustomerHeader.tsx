@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Edit } from "lucide-react";
 import { DeleteActionButton } from "@/components/tables/actions/DeleteActionButton";
 import CustomerStatusBadge from "@/components/common/badges/CustomerStatusBadge";
+import { LogButton } from "@/components/app/logs/dialog/LogButton";
 
 export default function ViewCustomerHeader({
   customer,
@@ -21,6 +22,7 @@ export default function ViewCustomerHeader({
         </p>
       </div>
       <div className="flex flex-wrap gap-2">
+        <LogButton customer={customer} variant="outline" />
         <Button onClick={onEdit}>
           <Edit className="w-6 h-6 mr-2" />
           Edit

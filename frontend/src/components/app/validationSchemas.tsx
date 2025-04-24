@@ -39,3 +39,14 @@ export const CustomerSchema = Yup.object().shape({
   address: Yup.string().nullable(),
   description: Yup.string().nullable(),
 });
+
+export const LogSchema = Yup.object().shape({
+  customer: Yup.object({
+    id: Yup.number().min(1, "Customer is required").required(),
+  }).required(),
+  type: Yup.object({
+    id: Yup.number().min(1, "Log type is required").required(),
+  }).required(),
+  follow_up_date: Yup.string().nullable(),
+  description: Yup.string().required("Description is required"),
+});

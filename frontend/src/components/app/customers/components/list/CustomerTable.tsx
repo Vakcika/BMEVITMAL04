@@ -105,10 +105,10 @@ export const CustomerTable = ({
                 </TableCell>
                 <TableCell>{customer.name}</TableCell>
                 <TableCell>
-                  <EmailLink email={customer.email} />
+                  <EmailLink customer={customer} />
                 </TableCell>
                 <TableCell>
-                  <PhoneLink phone={customer.phone_number} />
+                  <PhoneLink customer={customer} />
                 </TableCell>
                 <TableCell>
                   <UserAvatar user={customer.user?.name} />
