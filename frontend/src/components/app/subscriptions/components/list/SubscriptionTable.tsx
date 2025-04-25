@@ -23,6 +23,7 @@ import {
 import { TableSkeleton } from "../../../../tables/TableSkeleton";
 import { Subscription } from "@/types/Subscription";
 import SubscriptionFilters from "./SubscriptionFilters";
+import BillingCycleBadge from "@/components/common/badges/BillingCycleBadge";
 
 interface TableProps {
   value: Subscription[];
@@ -116,7 +117,7 @@ export const SubscriptionTable = ({
                     {subscription.amount}
                   </TableCell>
                   <TableCell>
-                    {subscription.billing_cycle?.name ?? "N/A"}
+                    <BillingCycleBadge cycle={subscription.billing_cycle} />
                   </TableCell>
                   <TableCell>
                     {subscription.start_date

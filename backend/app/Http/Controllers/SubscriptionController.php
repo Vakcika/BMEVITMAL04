@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SubscriptionRequest;
 use Illuminate\Http\Request;
 use App\Models\Subscription;
 use App\Http\Resources\SubscriptionResource;
@@ -59,13 +60,13 @@ class SubscriptionController extends Controller
      */
     public function show(string $id)
     {
-        return Subscription::findOrFail($id);
+        return new SubscriptionResource(Subscription::findOrFail($id));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(SubscriptionRequest $request, string $id)
     {
         $subscription = Subscription::findOrFail($id);
         $subscription->update($request->validated());

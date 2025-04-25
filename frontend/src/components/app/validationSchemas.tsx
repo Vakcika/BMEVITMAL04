@@ -50,3 +50,23 @@ export const LogSchema = Yup.object().shape({
   follow_up_date: Yup.string().nullable(),
   description: Yup.string().required("Description is required"),
 });
+
+export const SubscriptionSchema = Yup.object().shape({
+  name: Yup.string().required("Subscription name is required"),
+  customer: Yup.object().shape({
+    id: Yup.number().required("Customer is required"),
+  }),
+  billing_cycle: Yup.object().shape({
+    id: Yup.number().required("Billing cycle is required"),
+  }),
+  currency: Yup.object().shape({
+    id: Yup.number().required("Currency is required"),
+  }),
+  amount: Yup.number()
+    .required("Amount is required")
+    .min(0, "Amount must be greater than or equal to 0"),
+  start_date: Yup.date().nullable().required("Start date is required"),
+  end_date: Yup.date()
+    .nullable()
+    .min(Yup.ref("start_date"), "End date must be after start date"),
+});
