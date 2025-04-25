@@ -13,9 +13,42 @@ export const TransactionSchema = Yup.object().shape({
   amount: Yup.number()
     .required("Amount is required")
     .positive("Amount must be positive"),
-  transaction_date: Yup.date().required("Transaction date is required"),
-  due_date: Yup.date().nullable(),
-  payment_date: Yup.date().nullable(),
+  transaction_date: Yup.date()
+    .required("Transaction date is required")
+    .typeError("Transaction date must be a valid date"),
+  due_date: Yup.date()
+    .nullable()
+    .typeError("Due date must be a valid date")
+    .test("due-after-transaction", function (dueDate) {
+      const transactionDate = this.parent.transaction_date;
+      if (
+        dueDate &&
+        transactionDate &&
+        new Date(dueDate) < new Date(transactionDate)
+      ) {
+        return this.createError({
+          message: "Due date cannot be earlier than transaction date",
+        });
+      }
+      return true;
+    }),
+  payment_date: Yup.date()
+    .nullable()
+    .typeError("Payment date must be a valid date")
+    .test("payment-after-transaction", function (paymentDate) {
+      const transactionDate = this.parent.transaction_date;
+      if (
+        paymentDate &&
+        transactionDate &&
+        new Date(paymentDate) < new Date(transactionDate)
+      ) {
+        return this.createError({
+          message: "Payment date cannot be earlier than transaction date",
+        });
+      }
+      return true;
+    }),
+
   note: Yup.string().nullable(),
 });
 

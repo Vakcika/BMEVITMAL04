@@ -38,7 +38,7 @@ class TransactionController extends Controller
             });
         }
 
-         if (!empty($validated['type'])) {
+        if (!empty($validated['type'])) {
             $query->whereHas('type', function ($q) use ($validated) {
                 $q->where('name', $validated['type']);
             });
@@ -49,7 +49,7 @@ class TransactionController extends Controller
                 $validated['sort_by'],
                 $validated['sort_dir'] ?? 'asc'
             );
-        } else{
+        } else {
             $query->orderBy($validated['sort_by'] ?? 'transaction_date', $validated['sort_dir'] ?? 'desc');
         }
 
