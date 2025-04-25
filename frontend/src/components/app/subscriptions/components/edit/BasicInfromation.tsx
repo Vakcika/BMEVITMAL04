@@ -44,45 +44,39 @@ export default function BasicInformation({
         <FormSelect
           label="Customer*"
           name="customer"
-          value={values.customer?.id?.toString() ?? "0"}
-          onChange={(value) => {
-            const selectedCustomer = customers.find(
-              (c) => c.id === Number(value)
-            );
+          value={values.customer?.id?.toString() ?? ""}
+          onChange={(value, selected) =>
             setFieldValue("customer", {
               id: Number(value),
-              ...selectedCustomer,
-            });
-          }}
-          error={touched.customer?.id && (errors.customer?.id as string)}
-          options={customers.map((customer) => ({
-            value: customer.id.toString(),
-            label: customer.company_name,
-          }))}
+              ...selected,
+            })
+          }
+          options={customers}
+          getOptionValue={(c) => c.id.toString()}
+          getOptionLabel={(c) => c.company_name}
           placeholder="Select customer"
+          emptyLabel="None"
+          error={touched.customer?.id && (errors.customer?.id as string)}
         />
 
         <FormSelect
           label="Billing Cycle*"
           name="billing_cycle"
-          value={values.billing_cycle?.id?.toString() ?? "0"}
-          onChange={(value) => {
-            const selectedCycle = billingCycles.find(
-              (c) => c.id === Number(value)
-            );
+          value={values.billing_cycle?.id?.toString() ?? ""}
+          onChange={(value, selected) =>
             setFieldValue("billing_cycle", {
               id: Number(value),
-              ...selectedCycle,
-            });
-          }}
+              ...selected,
+            })
+          }
+          options={billingCycles}
+          getOptionValue={(b) => b.id.toString()}
+          getOptionLabel={(b) => b.name}
+          placeholder="Select billing cycle"
+          emptyLabel="None"
           error={
             touched.billing_cycle?.id && (errors.billing_cycle?.id as string)
           }
-          options={billingCycles.map((cycle) => ({
-            value: cycle.id.toString(),
-            label: cycle.name,
-          }))}
-          placeholder="Select billing cycle"
         />
       </div>
     </div>

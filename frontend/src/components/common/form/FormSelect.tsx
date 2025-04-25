@@ -7,41 +7,63 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 
-interface SelectOption {
-  value: string;
-  label: string;
-}
-
-interface FormSelectProps {
+interface FormSelectProps<T> {
   name: string;
   label: string;
   value: string;
-  onChange: (value: string) => void;
-  options: SelectOption[];
+  onChange: (value: string, selected?: T | null) => void;
+  options: T[];
+  getOptionValue: (option: T) => string;
+  getOptionLabel: (option: T) => string;
   placeholder: string;
   error?: string | boolean;
+  emptyLabel?: string;
 }
 
-export function FormSelect({
+export function FormSelect<T>({
   name,
   label,
   value,
   onChange,
   options,
+  getOptionValue,
+  getOptionLabel,
   placeholder,
   error,
-}: Readonly<FormSelectProps>) {
+  emptyLabel,
+}: Readonly<FormSelectProps<T>>) {
+  const handleSelectAll = () => {
+    onChange("all", null);
+  };
+
+  const handleSelectOption = (val: string) => {
+    const selected = options.find((o) => getOptionValue(o) === val);
+    onChange(val, selected);
+  };
+
+  const handleChange = (val: string) => {
+    if (emptyLabel && val === "all") {
+      handleSelectAll();
+    } else {
+      handleSelectOption(val);
+    }
+  };
+
   return (
     <div className="space-y-2">
       <Label htmlFor={name}>{label}</Label>
-      <Select name={name} value={value} onValueChange={onChange}>
+      <Select name={name} value={value} onValueChange={handleChange}>
         <SelectTrigger>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
+          {emptyLabel && <SelectItem value="all">{emptyLabel}</SelectItem>}
           {options.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
-              {option.label}
+            <SelectItem
+              key={getOptionValue(option)}
+              value={getOptionValue(option)}
+            >
+              {getOptionLabel(option)}
             </SelectItem>
           ))}
         </SelectContent>

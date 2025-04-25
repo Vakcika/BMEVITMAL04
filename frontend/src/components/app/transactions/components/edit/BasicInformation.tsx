@@ -30,72 +30,53 @@ export default function BasicInformation({
           label="Customer*"
           name="customer"
           value={values.customer.id.toString()}
-          onChange={(value) => {
-            const selectedCustomer = customers.find(
-              (c) => c.id === Number(value)
-            );
+          onChange={(value, selected) =>
             setFieldValue("customer", {
               id: Number(value),
-              ...selectedCustomer,
-            });
-          }}
-          error={touched.customer?.id && (errors.customer?.id as string)}
-          options={customers.map((customer) => ({
-            value: customer.id.toString(),
-            label: customer.company_name,
-          }))}
+              ...selected,
+            })
+          }
+          options={customers}
+          getOptionValue={(c) => c.id.toString()}
+          getOptionLabel={(c) => c.company_name}
           placeholder="Select customer"
+          emptyLabel="None"
+          error={touched.customer?.id && (errors.customer?.id as string)}
         />
 
         <FormSelect
           label="Transaction Type*"
           name="transaction_type"
           value={values.transaction_type.id.toString()}
-          onChange={(value) => {
-            const selectedType = transactionTypes.find(
-              (t) => t.id === Number(value)
-            );
+          onChange={(value, selected) =>
             setFieldValue("transaction_type", {
               id: Number(value),
-              ...selectedType,
-            });
-          }}
+              ...selected,
+            })
+          }
+          options={transactionTypes}
+          getOptionValue={(t) => t.id.toString()}
+          getOptionLabel={(t) => t.name}
+          placeholder="Select transaction type"
+          emptyLabel="None"
           error={
             touched.transaction_type?.id &&
             (errors.transaction_type?.id as string)
           }
-          options={transactionTypes.map((type) => ({
-            value: type.id.toString(),
-            label: type.name,
-          }))}
-          placeholder="Select transaction type"
         />
 
         <FormSelect
           label="Subscription (Optional)"
           name="subscription"
-          value={values.subscription?.id?.toString() ?? "0"}
-          onChange={(value) => {
-            if (value === "0") {
-              setFieldValue("subscription", null);
-            } else {
-              const selectedSubscription = subscriptions.find(
-                (s) => s.id === Number(value)
-              );
-              setFieldValue(
-                "subscription",
-                selectedSubscription || { id: Number(value) }
-              );
-            }
-          }}
-          options={[
-            { value: "0", label: "None" },
-            ...subscriptions.map((subscription) => ({
-              value: subscription.id.toString(),
-              label: subscription.name,
-            })),
-          ]}
+          value={values.subscription?.id?.toString() ?? ""}
+          onChange={(selected) =>
+            setFieldValue("subscription", selected ?? null)
+          }
+          options={subscriptions}
+          getOptionValue={(s) => s.id.toString()}
+          getOptionLabel={(s) => s.name}
           placeholder="Select subscription"
+          emptyLabel="None"
         />
       </div>
     </div>

@@ -46,11 +46,11 @@ export default function CompanyInformation({
                 name: users.find((u) => u.id === Number(value))?.name ?? "",
               })
             }
-            options={users.map((user) => ({
-              value: user.id.toString(),
-              label: user.name,
-            }))}
+            options={users}
+            getOptionValue={(u) => u.id.toString()}
+            getOptionLabel={(u) => u.name}
             placeholder="Select assignee"
+            emptyLabel="None"
             error={
               touched.user && errors.user ? "Assignee is required" : undefined
             }
@@ -61,11 +61,11 @@ export default function CompanyInformation({
             label="Status*"
             value={values.status?.id?.toString() ?? ""}
             onChange={(value) => setFieldValue("status", { id: Number(value) })}
-            options={statuses.map((status) => ({
-              value: status.id.toString(),
-              label: status.name,
-            }))}
+            options={statuses}
+            getOptionValue={(s) => s.id.toString()}
+            getOptionLabel={(s) => s.name}
             placeholder="Select status"
+            emptyLabel="None"
             error={
               touched.status && errors.status ? "Status is required" : undefined
             }

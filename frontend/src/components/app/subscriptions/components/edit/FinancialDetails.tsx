@@ -44,22 +44,19 @@ export default function FinancialDetails({
         <FormSelect
           label="Currency*"
           name="currency"
-          value={values.currency?.id?.toString() ?? "0"}
-          onChange={(value) => {
-            const selectedCurrency = currencies.find(
-              (c) => c.id === Number(value)
-            );
+          value={values.currency?.id?.toString() ?? ""}
+          onChange={(value, selected) =>
             setFieldValue("currency", {
               id: Number(value),
-              ...selectedCurrency,
-            });
-          }}
-          error={touched.currency?.id && (errors.currency?.id as string)}
-          options={currencies.map((currency) => ({
-            value: currency.id.toString(),
-            label: `${currency.code} (${currency.symbol})`,
-          }))}
+              ...selected,
+            })
+          }
+          options={currencies}
+          getOptionValue={(c) => c.id.toString()}
+          getOptionLabel={(c) => `${c.code} (${c.symbol})`}
           placeholder="Select currency"
+          emptyLabel="None"
+          error={touched.currency?.id && (errors.currency?.id as string)}
         />
       </div>
     </div>

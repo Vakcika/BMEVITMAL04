@@ -1,62 +1,32 @@
 import { useSearchParams } from "react-router-dom";
 import useSubscriptionFormOptions from "../../hooks/useSubscriptionFormOption";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import FilterSelect from "@/components/app/common/FilterSelect";
 
 export default function SubscriptionFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { billingCycles, customers, isLoading } = useSubscriptionFormOptions();
 
-  const updateParam = (key: string, value: string) => {
-    const newParams = new URLSearchParams(searchParams);
-    if (value === "all") {
-      newParams.delete(key);
-    } else {
-      newParams.set(key, value);
-    }
-    setSearchParams(newParams, { replace: true });
-  };
   return (
     <>
-      <Select
-        value={searchParams.get("customer") ?? "all"}
-        onValueChange={(value) => updateParam("customer", value)}
+      <FilterSelect
+        label="customers"
+        paramKey="customer"
+        options={customers.map((c) => ({
+          value: c.id.toString(),
+          label: c.company_name,
+        }))}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
         disabled={isLoading.currencies}
-      >
-        <SelectTrigger className="w-[160px]">
-          <SelectValue placeholder="Filter: customers" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All customers</SelectItem>
-          {customers.map((data) => (
-            <SelectItem key={data.id} value={data.id.toString()}>
-              {data.company_name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-      <Select
-        value={searchParams.get("billing_cycle") ?? "all"}
-        onValueChange={(value) => updateParam("billing_cycle", value)}
+      />
+      <FilterSelect
+        label="billing cycle"
+        paramKey="billing_cycle"
+        options={billingCycles.map((b) => ({ value: b.name, label: b.name }))}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
         disabled={isLoading.billingCycles}
-      >
-        <SelectTrigger className="w-[160px]">
-          <SelectValue placeholder="Filter: billing cycle" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All cycle</SelectItem>
-          {billingCycles.map((data) => (
-            <SelectItem key={data.id} value={data.name}>
-              {data.name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      />
     </>
   );
 }
