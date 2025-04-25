@@ -9,7 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import ViewTransactionHeader from "./components/view/ViewTransactionHeader";
 import AdditionalInfoCard from "./components/view/AdditionalInfoCard";
-import CustomerInfoCard from "./components/view/CustomerInfoCard";
+import CustomerInfoCard from "../../common/details/CustomerInfoCard";
 import TransactionDetailsCard from "./components/view/TransactionDetailsCard";
 
 export default function ViewTransaction() {
@@ -69,7 +69,7 @@ export default function ViewTransaction() {
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
         <TransactionDetailsCard transaction={transaction} />
         <AdditionalInfoCard transaction={transaction} />
-        <CustomerInfoCard transaction={transaction} />
+        <CustomerInfoCard customer={transaction.customer} />
       </div>
     </div>
   );

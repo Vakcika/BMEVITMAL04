@@ -7,9 +7,9 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import ViewSubscriptionHeader from "./components/view/ViewSubscriptionHeader";
-import CustomerInfoCard from "./components/view/CustomerInfoCard";
 import SubscriptionDetailsCard from "./components/view/SubscriptionDetailsCard";
 import AdditionalInfoCard from "./components/view/AddtitionalInfoCard";
+import CustomerInfoCard from "@/components/common/details/CustomerInfoCard";
 
 export default function ViewSubscription() {
   const { id } = useParams();
