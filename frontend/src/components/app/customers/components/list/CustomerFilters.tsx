@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import useCustomerFormOptions from "../../hooks/useCustomerFormOption";
-import FilterSelect from "@/components/app/common/FilterSelect";
+import FilterSelect from "@/components/tables/FilterSelect";
 export default function CustomerFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { users, statuses, isLoading } = useCustomerFormOptions();

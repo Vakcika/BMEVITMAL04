@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import useTransactionFormOptions from "../../hooks/useTransactionFormOptions";
-import FilterSelect from "@/components/app/common/FilterSelect";
+import FilterSelect from "@/components/tables/FilterSelect";
 
 export default function TransactionFilters() {
   const [searchParams, setSearchParams] = useSearchParams();

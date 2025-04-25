@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import useSubscriptionFormOptions from "../../hooks/useSubscriptionFormOption";
-import FilterSelect from "@/components/app/common/FilterSelect";
+import FilterSelect from "@/components/tables/FilterSelect";
 
 export default function SubscriptionFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
