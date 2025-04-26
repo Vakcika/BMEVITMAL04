@@ -32,7 +32,8 @@ export function useTransactionMutations() {
     newValues["customer_id"] = values.customer.id;
     newValues["currency_id"] = values.currency.id;
     newValues["created_by_id"] = user.user.id;
-    newValues["subscription_id"] = values.subscription?.id;
+    newValues["subscription_id"] =
+      values.subscription.id === 0 ? null : values.subscription.id;
     newValues["transaction_type_id"] = values.transaction_type.id;
 
     delete newValues["customer"];

@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 import useHttpGet from "@/api/useHttpGet";
 import { Currency, TransactionType } from "@/types/Transaction";
+import { Subscription } from "@/types/Subscription";
 
 export default function useTransactionFormOptions() {
   const customersQuery = useHttpGet<{ data: Customer[] }>("/api/customers");
@@ -35,16 +36,29 @@ export default function useTransactionFormOptions() {
     console.error(subscriptionsQuery.error);
   }
 
+  const transactionYearsQuery = useHttpGet<{ years: number[] }>(
+    `/api/transactions-years`
+  );
+  if (transactionYearsQuery.error) {
+    toast.error(
+      transactionYearsQuery.error.message ||
+        "Failed to load subscription years."
+    );
+    console.error(transactionYearsQuery.error);
+  }
+
   return {
     customers: customersQuery.data?.data || [],
     currencies: currenciesQuery.data || [],
     transactionTypes: transactionTypesQuery.data || [],
     subscriptions: subscriptionsQuery.data?.data || [],
+    years: transactionYearsQuery.data?.years || [],
     isLoading: {
       customers: customersQuery.isLoading,
       currencies: currenciesQuery.isLoading,
       transactionTypes: transactionTypesQuery.isLoading,
       subscriptions: subscriptionsQuery.isLoading,
+      years: transactionYearsQuery.isLoading,
     },
   };
 }

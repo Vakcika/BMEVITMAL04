@@ -7,6 +7,11 @@ export const TransactionSchema = Yup.object().shape({
   currency: Yup.object({
     id: Yup.number().min(1, "Currency is required").required(),
   }).required(),
+  subscription: Yup.object({
+    id: Yup.number().required("Invalid subscription"),
+  })
+    .nullable()
+    .notRequired(),
   transaction_type: Yup.object({
     id: Yup.number().min(1, "Transaction type is required").required(),
   }).required(),

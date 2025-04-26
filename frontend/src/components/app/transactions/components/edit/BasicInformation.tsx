@@ -69,8 +69,11 @@ export default function BasicInformation({
           label="Subscription (Optional)"
           name="subscription"
           value={values.subscription?.id?.toString() ?? ""}
-          onChange={(selected) =>
-            setFieldValue("subscription", selected ?? null)
+          onChange={(value, selected) =>
+            setFieldValue("subscription", {
+              id: Number(value),
+              ...selected,
+            })
           }
           options={subscriptions}
           getOptionValue={(s) => s.id.toString()}

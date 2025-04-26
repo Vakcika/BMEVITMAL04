@@ -17,7 +17,6 @@ use App\Http\Controllers\SubscriptionController;
 
 // Public routes
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/sign-up', [EmailController::class, 'create']);
 
 Route::get('/session', function () {
     return response()->json(session());
@@ -80,6 +79,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/transaction-types/{id}', [TransactionTypeController::class, 'show']);
     Route::put('/transaction-types/{id}', [TransactionTypeController::class, 'update']);
     Route::delete('/transaction-types/{id}', [TransactionTypeController::class, 'destroy']);
+    Route::get('/transactions-years', [TransactionController::class, 'getTransactionYears']);
 
     // Currencies
     Route::get('/currencies', [CurrencyController::class, 'index']);

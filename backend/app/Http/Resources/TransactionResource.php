@@ -21,7 +21,7 @@ class TransactionResource extends JsonResource
             'customer' => new CustomerResource($this->customer),
             'currency' => $this->currency,
             'created_by' => new UserResource($this->creator),
-            'subscription' => new CustomerResource($this->subscription),
+            'subscription' => $this->subscription,
             'transaction_type' => $this->type,
             'amount' => $this->amount,
             'amount_in_base' => $this->amount_in_base,

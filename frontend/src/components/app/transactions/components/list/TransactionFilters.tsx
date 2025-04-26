@@ -4,7 +4,7 @@ import FilterSelect from "@/components/tables/FilterSelect";
 
 export default function TransactionFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { currencies, transactionTypes, isLoading } =
+  const { currencies, transactionTypes, years, isLoading } =
     useTransactionFormOptions();
 
   return (
@@ -30,6 +30,17 @@ export default function TransactionFilters() {
         searchParams={searchParams}
         setSearchParams={setSearchParams}
         disabled={isLoading.transactionTypes}
+      />
+      <FilterSelect
+        label="year"
+        paramKey="year"
+        options={years.map((t) => ({
+          value: t.toString(),
+          label: t.toString(),
+        }))}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+        disabled={isLoading.years}
       />
     </>
   );

@@ -64,7 +64,7 @@ export const TransactionTable = ({
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>{title}</CardTitle>
-        <div className="grid grid-cols-1 lg:grid-cols-3 justify-items-end gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 justify-items-end gap-4">
           <TransactionFilters />
           {paginationProps && (
             <Select

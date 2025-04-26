@@ -16,7 +16,7 @@ export function useTransactionData(isNew: boolean, id?: string) {
     currency: { id: 0 } as Currency,
     transaction_type: { id: 0 } as TransactionType,
     subscription: null,
-    created_by: user as unknown as User,
+    created_by: user,
     amount: 0,
     amount_in_base: 0,
     transaction_date: null,

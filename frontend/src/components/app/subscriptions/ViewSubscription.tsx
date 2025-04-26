@@ -10,6 +10,7 @@ import ViewSubscriptionHeader from "./components/view/ViewSubscriptionHeader";
 import SubscriptionDetailsCard from "./components/view/SubscriptionDetailsCard";
 import AdditionalInfoCard from "./components/view/AddtitionalInfoCard";
 import CustomerInfoCard from "@/components/common/details/CustomerInfoCard";
+import TransactionListWrapper from "../transactions/components/list/TransactionListWrapper";
 
 export default function ViewSubscription() {
   const { id } = useParams();
@@ -70,6 +71,10 @@ export default function ViewSubscription() {
         <AdditionalInfoCard subscription={subscription} />
         <CustomerInfoCard customer={subscription.customer} />
       </div>
+      <TransactionListWrapper
+        defaultRows={5}
+        queryParams={"&subscription=" + subscription.id}
+      />
     </div>
   );
 }
