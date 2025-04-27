@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Transaction;
-use App\Models\CustomerStatus;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use DatePeriod;
+use DateInterval;
+use DateTimeInterface;
 
 class DashboardStatsController extends Controller
 {
@@ -22,7 +24,9 @@ class DashboardStatsController extends Controller
             $customer = $transactions->first()->customer;
 
             $balance = round($transactions->sum(function ($t) {
-                if (!$t->type) return 0;
+                if (!$t->type) {
+                    return 0;
+                }
                 return $t->type->name === 'income'
                     ? $t->amount_in_base
                     : -$t->amount_in_base;
@@ -110,16 +114,63 @@ class DashboardStatsController extends Controller
 
     public function subscriptionIncomeRate()
     {
-        $total = Transaction::count();
-        $subscriptionCount = Transaction::has('subscription')->count();
-        $nonSubscriptionCount = $total - $subscriptionCount;
+        $transactions = Transaction::with('subscription')
+            ->orderBy('created_at')
+            ->get();
 
-        return [
-            'subscription' => $subscriptionCount,
-            'non_subscription' => $nonSubscriptionCount,
-            'percentage' => $total > 0
-                ? ($subscriptionCount / $total) * 100
-                : 0
-        ];
+        $monthlyData = [];
+
+        foreach ($transactions as $transaction) {
+            $monthKey = $transaction->created_at->format('Y-m');
+
+            if (!isset($monthlyData[$monthKey])) {
+                $monthlyData[$monthKey] = [
+                    'month' => $monthKey,
+                    'total' => 0,
+                    'subscriptions' => 0
+                ];
+            }
+
+            $monthlyData[$monthKey]['total']++;
+
+            if ($transaction->subscription) {  // Added braces for Sonarlint
+                $monthlyData[$monthKey]['subscriptions']++;
+            }
+        }
+
+        // Fixed interval format and DateTime handling
+        $months = $this->generateDateRange(
+            now()->subYear()->startOfMonth()->toDateTime(),
+            now()->endOfMonth()->toDateTime(),
+            'P1M',  // ISO 8601 month interval
+            'Y-m'
+        );
+
+        $completeData = [];
+        foreach ($months as $month) {
+            $completeData[$month] = [
+                'month' => $month,
+                'rate' => isset($monthlyData[$month])
+                    ? ($monthlyData[$month]['subscriptions'] / $monthlyData[$month]['total']) * 100
+                    : 0
+            ];
+        }
+
+        return array_values($completeData);
+    }
+
+    protected function generateDateRange(DateTimeInterface $start, DateTimeInterface $end, string $interval, string $format)
+    {
+        $period = new DatePeriod(
+            $start,
+            new DateInterval($interval),
+            $end
+        );
+
+        $dates = [];
+        foreach ($period as $date) {
+            $dates[] = $date->format($format);
+        }
+        return $dates;
     }
 }

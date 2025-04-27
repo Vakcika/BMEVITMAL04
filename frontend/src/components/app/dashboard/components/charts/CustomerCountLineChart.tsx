@@ -5,16 +5,22 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
+  ReferenceLine,
 } from "recharts";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltipContent,
+} from "./ChartConfig";
+import { chartColors } from "./ChartTheme";
 
 interface CustomerCountData {
   month: string;
   count: number;
 }
 
-interface Props {
+interface CustomerCountChartProps {
   data: CustomerCountData[];
 }
 
@@ -33,27 +39,72 @@ const monthNames = [
   "Dec",
 ];
 
-export default function CustomerCountChart({ data }: Readonly<Props>) {
+export function CustomerCountChart({
+  data,
+}: Readonly<CustomerCountChartProps>) {
   const chartData = data.map((d) => ({
     ...d,
     month: monthNames[parseInt(d.month) - 1],
   }));
 
+  const chartConfig: ChartConfig = {
+    count: {
+      label: "New Customers",
+      color: chartColors.primary[0],
+    },
+  };
+
+  // Find average count for reference line
+  const avgCount =
+    chartData.reduce((acc, curr) => acc + curr.count, 0) / chartData.length;
+
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={chartData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="month" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="count"
-          stroke="#60a5fa"
-          name="New Customers"
-        />
-      </LineChart>
-    </ResponsiveContainer>
+    <ChartContainer config={chartConfig} className="h-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart
+          data={chartData}
+          margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+        >
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke={chartColors.border}
+            vertical={false}
+          />
+          <XAxis
+            dataKey="month"
+            axisLine={false}
+            tickLine={false}
+            dy={10}
+            tick={{ fontSize: 12 }}
+          />
+          <YAxis
+            axisLine={false}
+            tickLine={false}
+            dx={-10}
+            tick={{ fontSize: 12 }}
+          />
+          <Tooltip content={<ChartTooltipContent config={chartConfig} />} />
+          <ReferenceLine
+            y={avgCount}
+            stroke={chartColors.financial.neutral}
+            strokeDasharray="3 3"
+            label={{
+              value: "Avg",
+              position: "right",
+              fill: chartColors.textMuted,
+              fontSize: 12,
+            }}
+          />
+          <Line
+            type="monotone"
+            dataKey="count"
+            stroke={chartConfig.count.color}
+            strokeWidth={2}
+            dot={{ r: 4, strokeWidth: 2, fill: chartColors.background }}
+            activeDot={{ r: 6, strokeWidth: 0 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </ChartContainer>
   );
 }

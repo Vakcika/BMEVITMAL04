@@ -1,13 +1,14 @@
 import CustomBreadCrumb from "@/components/common/CustomBreadcrumb";
 import useDashboardStats from "./hooks/useDashboardStats";
-import CompanyBalancePieChart from "./components/charts/CompanyBalancePieChart";
-import DashboardChartCard from "./components/DashboardChartCard";
-import MonthlyIncomeExpenseChart from "./components/charts/MonthlyIncomeExpenseChart";
-import CustomerCountChart from "./components/charts/CustomerCountLineChart";
-import DashboardCard from "./components/DashboardCards";
+import { CompanyBalancePieChart } from "./components/charts/CompanyBalancePieChart";
+import { MonthlyIncomeExpenseChart } from "./components/charts/MonthlyIncomeExpenseChart";
+import { CustomerCountChart } from "./components/charts/CustomerCountLineChart";
 import { CustomerStatusPieChart } from "./components/charts/CustomerStatusPieChart";
 import { SubscriptionRateChart } from "./components/charts/SubscriptionRateAreaChart";
 import { CustomerBalancesList } from "./components/charts/CustomerBalancesList";
+import { Loader2 } from "lucide-react";
+import { DashboardCard } from "./components/DashboardCard";
+import { DashboardChartCard } from "./components/DashboardChartCard";
 
 export default function Dashboard() {
   const {
@@ -27,82 +28,159 @@ export default function Dashboard() {
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <DashboardCard title="Total Company Balance (HUF)">
-          <div className="text-2xl font-bold">
-            {isLoading.companyBalance ? (
-              <span className="text-gray-500">Loading...</span>
-            ) : (
-              companyBalance.total_in_base?.toLocaleString("hu-HU", {
-                style: "currency",
-                currency: "HUF",
-              })
-            )}
-          </div>
+        <DashboardCard title="Total Company Balance">
+          {isLoading.companyBalance ? (
+            <div className="flex items-center justify-center h-10">
+              <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+            </div>
+          ) : (
+            <div className="flex flex-col">
+              <div className="text-2xl font-bold">
+                {companyBalance.total_in_base?.toLocaleString("hu-HU", {
+                  style: "currency",
+                  currency: "HUF",
+                  minimumFractionDigits: 0,
+                })}
+              </div>
+              <div className="text-sm text-muted-foreground mt-1">
+                All currencies combined
+              </div>
+            </div>
+          )}
         </DashboardCard>
         <DashboardCard title="Company Balance (HUF)">
-          <div className="text-2xl font-bold">
-            {isLoading.companyBalance ? (
-              <span className="text-gray-500">Loading...</span>
-            ) : (
-              companyBalance.currencies.HUF?.toLocaleString("hu-HU", {
-                style: "currency",
-                currency: "HUF",
-              })
-            )}
-          </div>
+          {isLoading.companyBalance ? (
+            <div className="flex items-center justify-center h-10">
+              <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+            </div>
+          ) : (
+            <div className="flex flex-col">
+              <div className="text-2xl font-bold">
+                {companyBalance.currencies.HUF?.toLocaleString("hu-HU", {
+                  style: "currency",
+                  currency: "HUF",
+                  minimumFractionDigits: 0,
+                })}
+              </div>
+            </div>
+          )}
         </DashboardCard>
         <DashboardCard title="Company Balance (EUR)">
-          <div className="text-2xl font-bold">
-            {isLoading.companyBalance ? (
-              <span className="text-gray-500">Loading...</span>
-            ) : (
-              companyBalance.currencies.EUR?.toLocaleString("eu-EU", {
-                style: "currency",
-                currency: "EUR",
-              })
-            )}
-          </div>
+          {isLoading.companyBalance ? (
+            <div className="flex items-center justify-center h-10">
+              <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+            </div>
+          ) : (
+            <div className="flex flex-col">
+              <div className="text-2xl font-bold">
+                {companyBalance.currencies.EUR?.toLocaleString("eu-EU", {
+                  style: "currency",
+                  currency: "EUR",
+                  minimumFractionDigits: 0,
+                })}
+              </div>
+            </div>
+          )}
         </DashboardCard>
         <DashboardCard title="Company Balance (USD)">
-          <div className="text-2xl font-bold">
-            {isLoading.companyBalance ? (
-              <span className="text-gray-500">Loading...</span>
-            ) : (
-              companyBalance.currencies.USD?.toLocaleString("us-US", {
-                style: "currency",
-                currency: "USD",
-              })
-            )}
-          </div>
+          {isLoading.companyBalance ? (
+            <div className="flex items-center justify-center h-10">
+              <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+            </div>
+          ) : (
+            <div className="flex flex-col">
+              <div className="text-2xl font-bold">
+                {companyBalance.currencies.USD?.toLocaleString("us-US", {
+                  style: "currency",
+                  currency: "USD",
+                  minimumFractionDigits: 0,
+                })}
+              </div>
+            </div>
+          )}
         </DashboardCard>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <DashboardChartCard title="Company Balance by Currency">
-          <CompanyBalancePieChart data={companyBalance.currencies ?? {}} />
+        <DashboardChartCard
+          title="Company Balance by Currency"
+          description="Distribution across all currencies"
+          height={300}
+        >
+          {isLoading.companyBalance ? (
+            <div className="flex items-center justify-center h-full">
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            </div>
+          ) : (
+            <CompanyBalancePieChart data={companyBalance.currencies ?? {}} />
+          )}
         </DashboardChartCard>
 
-        <DashboardChartCard title="Customer Status Distribution">
-          <CustomerStatusPieChart data={customerStatusPie} />
+        <DashboardChartCard
+          title="Customer Status Distribution"
+          description="Current status of all customers"
+          height={300}
+        >
+          {isLoading.customerStatusPie ? (
+            <div className="flex items-center justify-center h-full">
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            </div>
+          ) : (
+            <CustomerStatusPieChart data={customerStatusPie} />
+          )}
         </DashboardChartCard>
 
-        <DashboardChartCard title="Monthly Income and Expenses">
-          <MonthlyIncomeExpenseChart data={monthlyIncomeExpense} />
+        <DashboardChartCard
+          title="Monthly Income and Expenses"
+          description="Last 12 months financial summary"
+          height={300}
+        >
+          {isLoading.monthlyIncomeExpense ? (
+            <div className="flex items-center justify-center h-full">
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            </div>
+          ) : (
+            <MonthlyIncomeExpenseChart data={monthlyIncomeExpense} />
+          )}
         </DashboardChartCard>
 
-        <DashboardChartCard title="New Customers by Month">
-          <CustomerCountChart data={customerCount} />
+        <DashboardChartCard
+          title="New Customers by Month"
+          description="Customer acquisition trend"
+          height={300}
+        >
+          {isLoading.customerCount ? (
+            <div className="flex items-center justify-center h-full">
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            </div>
+          ) : (
+            <CustomerCountChart data={customerCount} />
+          )}
         </DashboardChartCard>
-        <DashboardChartCard title="Customer Balances">
+
+        <DashboardChartCard
+          title="Top Customer Balances"
+          description="Ranked by current account balance"
+          height={300}
+        >
           {isLoading.customerBalances ? (
-            <div>Loading...</div>
+            <div className="flex items-center justify-center h-full">
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            </div>
           ) : (
             <CustomerBalancesList data={customerBalances} />
           )}
         </DashboardChartCard>
-        <DashboardChartCard title="Subscription Income Rate">
+
+        <DashboardChartCard
+          title="Subscription Income Rate"
+          description="Monthly subscription revenue growth"
+          height={300}
+        >
           {isLoading.subscriptionIncomeRate ? (
-            <div>Loading...</div>
+            <div className="flex items-center justify-center h-full">
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            </div>
           ) : (
             <SubscriptionRateChart data={subscriptionIncomeRate} />
           )}

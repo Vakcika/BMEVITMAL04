@@ -18,7 +18,7 @@ export default function useDashboardStats() {
     monthlyIncomeExpense: monthlyIncomeExpenseQuery.data ?? [],
     customerCount: customerCountQuery.data ?? [],
     customerStatusPie: customerStatusPieQuery.data ?? [],
-    subscriptionIncomeRate: subscriptionIncomeRateQuery.data ?? {},
+    subscriptionIncomeRate: subscriptionIncomeRateQuery.data ?? [],
     isLoading: {
       customerBalances: customerBalancesQuery.isLoading,
       companyBalance: companyBalanceQuery.isLoading,
