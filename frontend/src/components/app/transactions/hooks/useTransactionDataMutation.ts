@@ -1,8 +1,8 @@
+import { UUID } from "crypto";
 import { useAuth } from "@webbydevs/react-laravel-sanctum-auth";
 import useHttpPut from "@/api/useHttpPut";
 import useHttpPost from "@/api/useHttpPost";
 import { Transaction } from "@/types/Transaction";
-import { UUID } from "crypto";
 
 interface TransactionApiData {
   id?: UUID;
@@ -21,36 +21,71 @@ interface TransactionApiData {
   updated_at?: string;
 }
 
+async function getExchangeRate(from: string): Promise<number> {
+  if (from === "HUF") return 1;
+
+  const response = await fetch(
+    `https://api.frankfurter.app/latest?from=${from}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch exchange rate");
+  }
+
+  const data = await response.json();
+
+  if (!data.rates?.HUF) {
+    throw new Error(`No HUF rate available for ${from}`);
+  }
+
+  return data.rates.HUF;
+}
+
 export function useTransactionMutations() {
   const { user } = useAuth();
   const updateMutation = useHttpPut("/api/transactions");
   const createMutation = useHttpPost("/api/transactions");
 
-  const prepareTransactionData = (values: Transaction): TransactionApiData => {
+  const prepareTransactionData = async (
+    values: Transaction
+  ): Promise<TransactionApiData> => {
     const newValues: any = { ...values };
+    const fromCurrencyCode = values.currency.code;
 
-    newValues["customer_id"] = values.customer.id;
-    newValues["currency_id"] = values.currency.id;
-    newValues["created_by_id"] = user.user.id;
-    newValues["subscription_id"] =
-      values.subscription.id === 0 ? null : values.subscription.id;
-    newValues["transaction_type_id"] = values.transaction_type.id;
+    // Convert to HUF using current exchange rate
+    if (fromCurrencyCode === "HUF") {
+      newValues.amount_in_base = values.amount;
+    } else {
+      const rate = await getExchangeRate(fromCurrencyCode);
+      newValues.amount_in_base = Math.round(values.amount * rate * 100) / 100; // Round to 2 decimals
+    }
 
-    delete newValues["customer"];
-    delete newValues["currency"];
-    delete newValues["created_by"];
-    delete newValues["subscription"];
-    delete newValues["transaction_type"];
+    // Transform relationships to foreign keys
+    newValues.customer_id = values.customer.id;
+    newValues.currency_id = values.currency.id;
+    newValues.created_by_id = user?.user?.id;
+    newValues.subscription_id =
+      values.subscription?.id === 0 ? null : values.subscription?.id;
+    newValues.transaction_type_id = values.transaction_type.id;
+
+    // Remove nested objects
+    delete newValues.customer;
+    delete newValues.currency;
+    delete newValues.created_by;
+    delete newValues.subscription;
+    delete newValues.transaction_type;
 
     return newValues as TransactionApiData;
   };
 
   const createTransaction = async (values: Transaction) => {
-    return await createMutation.mutateAsync(prepareTransactionData(values));
+    const preparedData = await prepareTransactionData(values);
+    return await createMutation.mutateAsync(preparedData);
   };
 
   const updateTransaction = async (values: Transaction) => {
-    return await updateMutation.mutateAsync(prepareTransactionData(values));
+    const preparedData = await prepareTransactionData(values);
+    return await updateMutation.mutateAsync(preparedData);
   };
 
   return {
