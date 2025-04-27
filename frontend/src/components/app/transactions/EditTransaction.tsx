@@ -12,8 +12,8 @@ import Note from "./components/edit/Note.tsx";
 import { TransactionSchema } from "../validationSchemas.tsx";
 import { useTransactionData } from "./hooks/useTransactionData.ts";
 import { useTransactionMutations } from "./hooks/useTransactionDataMutation.ts";
-import useTransactionFormOptions from "./hooks/useTransactionFormOptions.tsx";
 import FormActions from "@/components/common/form/FormAction.tsx";
+import useFormOptions from "../hooks/useFormOptions.ts";
 
 interface EditTransactionProps {
   isNew?: boolean;
@@ -27,7 +27,7 @@ export default function EditTransaction({
   const navigate = useNavigate();
 
   const { customers, currencies, transactionTypes, subscriptions } =
-    useTransactionFormOptions();
+    useFormOptions();
 
   const customerId = searchParams.get("customer");
   const currencyId = searchParams.get("currencyId");

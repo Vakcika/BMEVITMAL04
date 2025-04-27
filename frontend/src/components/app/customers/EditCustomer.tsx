@@ -13,7 +13,7 @@ import Address from "./components/edit/Address";
 import CompanyInformation from "./components/edit/CompanyInformation";
 import ContactInformation from "./components/edit/ContactInfromation";
 import { useCustomerMutations } from "./hooks/useCustomerDataMutation";
-import useCustomerFormOptions from "./hooks/useCustomerFormOption";
+import useFormOptions from "../hooks/useFormOptions.ts";
 
 interface EditCustomerProps {
   isNew?: boolean;
@@ -27,7 +27,7 @@ export default function EditCustomer({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { customerData, isLoading } = useCustomerData(isNew);
   const { createCustomer, updateCustomer } = useCustomerMutations();
-  const { users, statuses } = useCustomerFormOptions();
+  const { users, statuses } = useFormOptions();
 
   const handleSubmit = async (values: Customer) => {
     setIsSubmitting(true);

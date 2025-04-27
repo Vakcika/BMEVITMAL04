@@ -9,10 +9,10 @@ import { SubscriptionSchema } from "../validationSchemas";
 import { useSubscriptionData } from "./hooks/useSubscriptionData";
 import { useSubscriptionMutations } from "./hooks/useSubscriptionDataMutation";
 import FormActions from "@/components/common/form/FormAction";
-import useSubscriptionFormOptions from "./hooks/useSubscriptionFormOption";
 import BasicInformation from "./components/edit/BasicInfromation";
 import FinancialDetails from "./components/edit/FinancialDetails";
 import SubscriptionDates from "./components/edit/SubscriptionDates";
+import useFormOptions from "../hooks/useFormOptions.ts";
 
 interface EditSubscriptionProps {
   isNew?: boolean;
@@ -26,7 +26,7 @@ export default function EditSubscription({
 
   const { initialValues, isLoading } = useSubscriptionData(isNew, id);
 
-  const { customers, currencies, billingCycles } = useSubscriptionFormOptions();
+  const { customers, currencies, billingCycles } = useFormOptions();
 
   const { createSubscription, updateSubscription } = useSubscriptionMutations();
 
