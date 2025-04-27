@@ -5,26 +5,36 @@ import { UUID } from "crypto";
 import { endOfMonth, endOfQuarter, getMonth } from "date-fns";
 
 export function useGenerateTransactions() {
+  /**
+   * Calculates the last day of a billing cycle based on the subscription's start date and cycle type
+   * @param startDate - Subscription start date
+   * @param cycleIndex - Which cycle number we're calculating (0-based)
+   * @param cycleName - Billing cycle type (monthly/quarterly/yearly)
+   * @returns Date object representing the last day of the billing cycle
+   */
   const getLastDayOfBillingCycle = useCallback(
     (startDate: Date, cycleIndex: number, cycleName: string): Date => {
       const date = new Date(startDate);
 
       switch (cycleName.toLowerCase()) {
         case "monthly":
+          // Monthly: Add cycleIndex months and get end of that month
           return endOfMonth(
             new Date(date.getFullYear(), date.getMonth() + cycleIndex)
           );
 
         case "quarterly": {
+          // Quarterly: Calculate target quarter and get end of that quarter
           const quarterStartMonth = Math.floor(date.getMonth() / 3) * 3;
           const targetMonth = quarterStartMonth + cycleIndex * 3;
           return endOfQuarter(new Date(date.getFullYear(), targetMonth));
         }
 
         case "yearly": {
+          // Yearly: Add cycleIndex years and set to January 31st
           const yearlyDate = new Date(date);
           yearlyDate.setFullYear(yearlyDate.getFullYear() + cycleIndex);
-          yearlyDate.setMonth(0);
+          yearlyDate.setMonth(0); // January
           return new Date(yearlyDate.getFullYear(), 0, 31);
         }
 
@@ -35,31 +45,38 @@ export function useGenerateTransactions() {
     []
   );
 
+  /**
+   * Determines which quarter (1-4) a date belongs to
+   */
   const getQuarterFromDate = useCallback((date: Date): number => {
     return Math.floor(getMonth(date) / 3) + 1;
   }, []);
 
+  /**
+   * Maps a transaction to its corresponding billing cycle index
+   */
   const determineTransactionCycle = useCallback(
     (
       tx: Transaction,
       billingCycle: string,
       selectedYear: number
     ): number | null => {
-      if (!tx.transaction_date && !tx.payment_date) return null;
-
+      // Use payment date if transaction date isn't available
       const dateToUse = tx.transaction_date
         ? new Date(tx.transaction_date)
-        : new Date(tx.payment_date!);
+        : tx.payment_date
+        ? new Date(tx.payment_date)
+        : null;
 
-      if (dateToUse.getFullYear() !== selectedYear) return null;
+      if (!dateToUse || dateToUse.getFullYear() !== selectedYear) return null;
 
       switch (billingCycle.toLowerCase()) {
         case "monthly":
-          return getMonth(dateToUse);
+          return getMonth(dateToUse); // 0-11
         case "quarterly":
-          return getQuarterFromDate(dateToUse) - 1;
+          return getQuarterFromDate(dateToUse) - 1; // Convert to 0-3
         case "yearly":
-          return 0;
+          return 0; // Only one cycle per year
         default:
           return null;
       }
@@ -67,7 +84,15 @@ export function useGenerateTransactions() {
     [getQuarterFromDate]
   );
 
-  const generateTransactionsForYear = useCallback(
+  /**
+   * Generates transactions for a subscription, combining existing transactions with predicted ones
+   * @param subscription - The subscription to generate transactions for
+   * @param user - The user creating the transactions
+   * @param existingTransactions - Already existing transactions from the API
+   * @param selectedYear - The year to generate transactions for
+   * @returns Combined array of real and predicted transactions
+   */
+  const generateTransactions = useCallback(
     (
       subscription: Subscription,
       user: User,
@@ -79,72 +104,75 @@ export function useGenerateTransactions() {
         ? new Date(subscription.end_date)
         : null;
       const startDate = new Date(subscription.start_date);
+      const cycleName = subscription.billing_cycle.name.toLowerCase();
 
+      // Adjust start date for the selected year
       const effectiveStartDate = new Date(startDate);
       if (startDate.getFullYear() < selectedYear) {
+        // If subscription started before selected year, use Jan 1st of selected year
         effectiveStartDate.setFullYear(selectedYear, 0, 1);
       } else {
+        // Otherwise use the actual start date within the year
         effectiveStartDate.setFullYear(selectedYear);
       }
 
-      let count = 0;
-      const cycleName = subscription.billing_cycle.name.toLowerCase();
-
+      // Calculate number of billing cycles in the selected year
+      let cycleCount = 0;
       if (cycleName === "monthly") {
         const endMonth =
           endDate?.getFullYear() === selectedYear ? endDate.getMonth() : 11;
         const startMonth = effectiveStartDate.getMonth();
-        count = endMonth >= startMonth ? endMonth - startMonth + 1 : 0;
+        cycleCount = Math.max(0, endMonth - startMonth + 1);
       } else if (cycleName === "quarterly") {
         const startQuarter = Math.floor(effectiveStartDate.getMonth() / 3);
-        let endQuarter = 3;
-        if (endDate?.getFullYear() === selectedYear) {
-          endQuarter = Math.floor(endDate.getMonth() / 3);
-        }
-        count = endQuarter >= startQuarter ? endQuarter - startQuarter + 1 : 0;
+        const endQuarter =
+          endDate?.getFullYear() === selectedYear
+            ? Math.floor(endDate.getMonth() / 3)
+            : 3;
+        cycleCount = Math.max(0, endQuarter - startQuarter + 1);
       } else if (cycleName === "yearly") {
-        const isActiveInYear = !(
-          (endDate && endDate.getFullYear() < selectedYear) ||
-          startDate.getFullYear() > selectedYear
-        );
-        count = isActiveInYear ? 1 : 0;
+        const isActive =
+          !(endDate && endDate.getFullYear() < selectedYear) &&
+          startDate.getFullYear() <= selectedYear;
+        cycleCount = isActive ? 1 : 0;
       }
 
+      // Filter transactions for the selected year
       const yearTransactions = existingTransactions.filter((tx) => {
-        const txDate = tx.transaction_date
-          ? new Date(tx.transaction_date)
-          : tx.payment_date
-          ? new Date(tx.payment_date)
-          : null;
-        return txDate?.getFullYear() === selectedYear;
+        const txDate = tx.transaction_date ?? tx.payment_date;
+        return txDate && new Date(txDate).getFullYear() === selectedYear;
       });
 
-      const existingTransactionCycles = new Map<number, Transaction>();
+      // Map existing transactions to their cycle indices
+      const existingCycles = new Map<number, Transaction>();
       yearTransactions.forEach((tx) => {
         const cycle = determineTransactionCycle(tx, cycleName, selectedYear);
-        if (cycle !== null) existingTransactionCycles.set(cycle, tx);
+        if (cycle !== null) existingCycles.set(cycle, tx);
       });
 
-      for (let i = 0; i < count; i++) {
+      // Generate transactions for each cycle
+      for (let cycleIndex = 0; cycleIndex < cycleCount; cycleIndex++) {
         const dueDate = getLastDayOfBillingCycle(
           effectiveStartDate,
-          i,
+          cycleIndex,
           cycleName
         );
 
-        if (endDate && dueDate > endDate && !existingTransactionCycles.has(i)) {
+        // Skip cycles beyond subscription end date (unless they have existing transactions)
+        if (endDate && dueDate > endDate && !existingCycles.has(cycleIndex))
           continue;
-        }
 
-        const existingTransaction = existingTransactionCycles.get(i);
+        const existingTx = existingCycles.get(cycleIndex);
 
-        if (existingTransaction) {
-          const txCopy = { ...existingTransaction };
+        if (existingTx) {
+          // Use existing transaction but ensure it has a due date
+          const txCopy = { ...existingTx };
           txCopy.due_date ??= dueDate.toISOString();
           transactions.push(txCopy);
         } else {
+          // Create new mock transaction with detailed information
           transactions.push({
-            id: `mock-tx-${subscription.id}-${i}` as UUID,
+            id: `mock-tx-${subscription.id}-${cycleIndex}` as UUID,
             customer: subscription.customer,
             currency: subscription.currency,
             transaction_type: { id: 1, name: "Income" },
@@ -155,18 +183,23 @@ export function useGenerateTransactions() {
             transaction_date: null,
             due_date: dueDate.toISOString(),
             payment_date: null,
-            note: `${subscription.name} payment (${i + 1}/${count})`,
+            note: `${subscription.name} payment (${
+              cycleIndex + 1
+            }/${cycleCount})`,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString(),
           });
         }
       }
 
+      // Add any unassigned transactions (fallback)
       yearTransactions.forEach((tx) => {
-        const cycle = determineTransactionCycle(tx, cycleName, selectedYear);
-        if (cycle === null) transactions.push(tx);
+        if (determineTransactionCycle(tx, cycleName, selectedYear) === null) {
+          transactions.push(tx);
+        }
       });
 
+      // Sort transactions by due date
       return transactions.sort(
         (a, b) =>
           new Date(a.due_date ?? "").getTime() -
@@ -176,5 +209,5 @@ export function useGenerateTransactions() {
     [getLastDayOfBillingCycle, determineTransactionCycle]
   );
 
-  return { generateTransactionsForYear };
+  return { generateTransactions };
 }

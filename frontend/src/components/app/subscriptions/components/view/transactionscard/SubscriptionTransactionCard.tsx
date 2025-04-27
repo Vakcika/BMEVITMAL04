@@ -27,7 +27,7 @@ export default function SubscriptionTransactionsCard({
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
-  const { generateTransactionsForYear } = useGenerateTransactions();
+  const { generateTransactions } = useGenerateTransactions();
 
   // Fetch actual transactions for this subscription
   const { data, error, isLoading } = useHttpGet<{ data: Transaction[] }>(
@@ -46,7 +46,7 @@ export default function SubscriptionTransactionsCard({
 
     const timer = setTimeout(() => {
       const actualTransactions = data?.data ?? [];
-      const allTransactions = generateTransactionsForYear(
+      const allTransactions = generateTransactions(
         subscription,
         user,
         actualTransactions,
@@ -58,9 +58,8 @@ export default function SubscriptionTransactionsCard({
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [subscription, user, data, isLoading, year, generateTransactionsForYear]);
+  }, [subscription, user, data, isLoading, year, generateTransactions]);
 
-  // Render appropriate card content based on loading state and data availability
   const renderCardContent = () => {
     if (loading) {
       return (
