@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function SubscriptionListWrapper({
-  title = "Subscribers",
+  title = "Subscriptions",
   baseUrl = "/api/subscriptions",
   defaultRows = 25,
   queryParams = "",
@@ -34,7 +34,7 @@ export default function SubscriptionListWrapper({
   );
 
   if (query.error) {
-    toast.error(query.error.message || "Failed to load subscribers.");
+    toast.error(query.error.message || "Failed to load subscriptions.");
     console.error(query.error);
   }
 

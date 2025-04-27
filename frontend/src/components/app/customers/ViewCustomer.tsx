@@ -10,6 +10,7 @@ import CustomerDetailsCard from "./components/view/CustomerDatilsCard";
 import CustomerExtraInfoCard from "./components/view/CustomerExtraInfoCard";
 import TransactionListWrapper from "../transactions/components/list/TransactionListWrapper";
 import LogListWrapper from "../logs/list/LogListWrapper";
+import SubscriptionListWrapper from "../subscriptions/components/list/SubscriptionListWrapper";
 
 export default function ViewCustomer() {
   const { id } = useParams();
@@ -68,7 +69,10 @@ export default function ViewCustomer() {
         <CustomerDetailsCard customer={customer} />
         <CustomerExtraInfoCard customer={customer} />
       </div>
-      <LogListWrapper customer={customer} />
+      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
+        <LogListWrapper customer={customer} />
+        <SubscriptionListWrapper queryParams={"&customer=" + customer.id} />
+      </div>
 
       <TransactionListWrapper
         defaultRows={5}

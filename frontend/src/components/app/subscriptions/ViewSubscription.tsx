@@ -59,7 +59,7 @@ export default function ViewSubscription() {
   if (!subscription) return <div>Subscription not found</div>;
 
   return (
-    <div className="p-4">
+    <div className="p-4 space-y-6">
       <CustomBreadCrumb model={breadcrumbs} />
       <ViewSubscriptionHeader
         subscription={subscription}
@@ -86,7 +86,6 @@ export default function ViewSubscription() {
           subscription.amount
         }
       />
-
       <CustomerInfoCard customer={subscription.customer} />
     </div>
   );
