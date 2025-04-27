@@ -4,7 +4,9 @@ import { Currency, TransactionType } from "@/types/Transaction";
 import { Subscription } from "@/types/Subscription";
 
 export default function useTransactionFormOptions() {
-  const customersQuery = useHttpGet<{ data: Customer[] }>("/api/customers");
+  const customersQuery = useHttpGet<{ data: Customer[] }>(
+    "/api/customers?per_page=100"
+  );
   if (customersQuery.error) {
     toast.error(customersQuery.error.message || "Failed to load customers.");
     console.error(customersQuery.error);
@@ -27,7 +29,7 @@ export default function useTransactionFormOptions() {
   }
 
   const subscriptionsQuery = useHttpGet<{ data: Subscription[] }>(
-    "/api/subscriptions"
+    "/api/subscriptions?per_page=100"
   );
   if (subscriptionsQuery.error) {
     toast.error(

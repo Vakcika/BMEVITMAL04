@@ -14,16 +14,10 @@ export default function TransactionList({
 }: Readonly<TransactionListProps>) {
   const navigate = useNavigate();
 
-  const handleCreateTransaction = (dueDate: string) => {
-    navigate(`/app/transaction/new`, {
-      state: {
-        subscription: subscription.id,
-        dueDate,
-        amount: subscription.amount,
-        customer: subscription.customer.id,
-        currency: subscription.currency.id,
-      },
-    });
+  const handleCreateTransaction = () => {
+    navigate(
+      `/app/transaction/new?$&customer=${subscription.customer.id}$&currencyId=1$&transactionTypeId=1$&subscription=${subscription.id}`
+    );
   };
 
   const handleViewTransaction = (tx: Transaction) => {
@@ -32,7 +26,7 @@ export default function TransactionList({
       navigate(`/app/transaction/${tx.id}`);
     } else {
       // For mock transactions, redirect to create with prefilled data
-      handleCreateTransaction(tx.due_date ?? "");
+      handleCreateTransaction();
     }
   };
 

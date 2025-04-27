@@ -7,7 +7,7 @@ import { format } from "date-fns";
 interface TransactionListItemProps {
   transaction: Transaction;
   subscription: Subscription;
-  onCreateTransaction: (dueDate: string) => void;
+  onCreateTransaction: () => void;
   onViewTransaction: (transaction: Transaction) => void;
 }
 
@@ -73,7 +73,7 @@ export default function TransactionListItem({
               variant="ghost"
               size="sm"
               className="h-8 w-8 p-0"
-              onClick={() => onCreateTransaction(tx.due_date ?? "")}
+              onClick={() => onCreateTransaction()}
             >
               <Plus className="h-4 w-4" />
             </Button>

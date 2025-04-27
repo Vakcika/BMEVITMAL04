@@ -5,7 +5,9 @@ import { BillingCycle } from "@/types/Subscription";
 import { Currency } from "@/types/Transaction";
 
 export default function useSubscriptionFormOptions() {
-  const customersQuery = useHttpGet<{ data: Customer[] }>("/api/customers");
+  const customersQuery = useHttpGet<{ data: Customer[] }>(
+    "/api/customers?per_page=100"
+  );
   if (customersQuery.error) {
     toast.error(customersQuery.error.message || "Failed to load customers.");
     console.error(customersQuery.error);
