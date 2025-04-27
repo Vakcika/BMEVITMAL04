@@ -14,6 +14,8 @@ use App\Http\Controllers\TransactionTypeController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\BillingCycleController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\DashboardStatsController;
+
 
 // Public routes
 Route::post('/login', [AuthController::class, 'login']);
@@ -101,4 +103,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/subscriptions/{id}', [SubscriptionController::class, 'show']);
     Route::put('/subscriptions/{id}', [SubscriptionController::class, 'update']);
     Route::delete('/subscriptions/{id}', [SubscriptionController::class, 'destroy']);
+
+    // Dashboard stats
+    Route::get('/customer-balances', [DashboardStatsController::class, 'customerBalances']);
+    Route::get('/company-balance', [DashboardStatsController::class, 'companyBalance']);
+    Route::get('/monthly-income-expense', [DashboardStatsController::class, 'monthlyIncomeExpense']);
+    Route::get('/customer-count', [DashboardStatsController::class, 'customerCountByMonth']);
+    Route::get('/customer-status-pie', [DashboardStatsController::class, 'customerStatusPie']);
+    Route::get('/subscription-income-rate', [DashboardStatsController::class, 'subscriptionIncomeRate']);
 });
