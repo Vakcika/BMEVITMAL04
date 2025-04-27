@@ -2,26 +2,48 @@ import { useAuth } from "@webbydevs/react-laravel-sanctum-auth";
 import useHttpGet from "@/api/useHttpGet";
 import { toast } from "sonner";
 import { Transaction, Currency, TransactionType } from "@/types/Transaction";
+import { format } from "date-fns";
 import { UUID } from "crypto";
+import { Subscription } from "@/types/Subscription";
 
 interface TransactionResponse {
   data: Transaction;
 }
-export function useTransactionData(isNew: boolean, id?: string) {
+interface UseTransactionDataParams {
+  customerId?: string | null;
+  currencyId?: string | null;
+  transactionTypeId?: string | null;
+  subscriptionId?: string | null;
+}
+export function useTransactionData(
+  isNew: boolean,
+  id?: string,
+  {
+    customerId,
+    currencyId,
+    transactionTypeId,
+    subscriptionId,
+  }: UseTransactionDataParams = {}
+) {
   const { user } = useAuth();
 
+  const time = new Date();
   const initialValues: Transaction = {
     id: "" as UUID,
-    customer: { id: 0 } as Customer,
-    currency: { id: 0 } as Currency,
-    transaction_type: { id: 0 } as TransactionType,
-    subscription: null,
+    customer: { id: customerId ? parseInt(customerId) : 0 } as Customer,
+    currency: { id: currencyId ? parseInt(currencyId) : 0 } as Currency,
+    transaction_type: {
+      id: transactionTypeId ? parseInt(transactionTypeId) : 0,
+    } as TransactionType,
+    subscription: {
+      id: subscriptionId ? parseInt(subscriptionId) : null,
+    } as Subscription,
     created_by: user,
     amount: 0,
     amount_in_base: 0,
-    transaction_date: null,
+    transaction_date: format(time, "yyyy-MM-dd'T'HH:mm"),
     due_date: null,
-    payment_date: null,
+    payment_date: format(time, "yyyy-MM-dd"),
     note: null,
     created_at: "",
     updated_at: "",

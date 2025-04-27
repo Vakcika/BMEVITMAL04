@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { Formik, Form, FormikHelpers } from "formik";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -22,13 +22,24 @@ interface EditTransactionProps {
 export default function EditTransaction({
   isNew = false,
 }: Readonly<EditTransactionProps>) {
+  const [searchParams] = useSearchParams();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const { initialValues, isLoading } = useTransactionData(isNew, id);
-
   const { customers, currencies, transactionTypes, subscriptions } =
     useTransactionFormOptions();
+
+  const customerId = searchParams.get("customer");
+  const currencyId = searchParams.get("currencyId");
+  const transactionTypeId = searchParams.get("transactionTypeId");
+  const subscriptionId = searchParams.get("subscription");
+
+  const { initialValues, isLoading } = useTransactionData(isNew, id, {
+    customerId,
+    currencyId,
+    transactionTypeId,
+    subscriptionId,
+  });
 
   const { createTransaction, updateTransaction } = useTransactionMutations();
 

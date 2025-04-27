@@ -15,6 +15,7 @@ interface Props {
   baseUrl?: string;
   defaultRows?: number;
   queryParams?: string;
+  createQueryParams?: string;
 }
 
 export default function TransactionListWrapper({
@@ -22,15 +23,13 @@ export default function TransactionListWrapper({
   baseUrl = "/api/transactions",
   defaultRows = 25,
   queryParams = "",
+  createQueryParams = "",
 }: Readonly<Props>) {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState(defaultRows);
-
-  const [searchParams] = useSearchParams();
-  const queryString = searchParams.toString();
   const query = useHttpGet<PagableResourceWrapper<Transaction[]>>(
-    `${baseUrl}?per_page=${rows}&page=${page}${queryParams}&${queryString}`
+    `${baseUrl}?per_page=${rows}&page=${page}${queryParams}`
   );
 
   if (query.error) {
@@ -45,7 +44,7 @@ export default function TransactionListWrapper({
   };
 
   const handleCreate = () => {
-    navigate("/app/transaction/new");
+    navigate(`/app/transaction/new?${createQueryParams}`);
   };
 
   const handleDelete = async (transaction: Transaction) => {

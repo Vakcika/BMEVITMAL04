@@ -71,9 +71,11 @@ export default function ViewCustomer() {
       <LogListWrapper customer={customer} />
 
       <TransactionListWrapper
-        title="Transactions"
         defaultRows={5}
         queryParams={"&customer=" + customer.id}
+        createQueryParams={
+          "&customer=" + customer.id + "&currencyId=1" + "&transactionTypeId=1"
+        }
       />
     </div>
   );

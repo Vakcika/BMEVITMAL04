@@ -74,6 +74,15 @@ export default function ViewSubscription() {
       <TransactionListWrapper
         defaultRows={5}
         queryParams={"&subscription=" + subscription.id}
+        createQueryParams={
+          "&customer=" +
+          subscription.customer.id +
+          "&currencyId=" +
+          subscription.currency.id +
+          "&transactionTypeId=1" +
+          "&subscription=" +
+          subscription.id
+        }
       />
 
       <CustomerInfoCard customer={subscription.customer} />
