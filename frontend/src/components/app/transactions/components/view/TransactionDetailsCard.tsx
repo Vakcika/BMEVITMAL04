@@ -87,7 +87,14 @@ export default function TransactionDetailsCard({
             <DetailWithIcon
               icon={<Repeat className="w-6 h-6 text-n100" />}
               label="Subscription"
-              value={transaction.subscription?.name ?? "N/A"}
+              value={
+                <a
+                  href={"/app/subscription/" + transaction.subscription?.id}
+                  className="text-p500 hover:underline"
+                >
+                  {transaction.subscription?.name ?? "N/A"}
+                </a>
+              }
             />
           )}
         </div>
