@@ -8,9 +8,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import ViewSubscriptionHeader from "./components/view/ViewSubscriptionHeader";
 import SubscriptionDetailsCard from "./components/view/SubscriptionDetailsCard";
-import AdditionalInfoCard from "./components/view/AddtitionalInfoCard";
 import CustomerInfoCard from "@/components/common/details/CustomerInfoCard";
 import TransactionListWrapper from "../transactions/components/list/TransactionListWrapper";
+import SubscriptionTransactionsCard from "./components/view/transactionscard/SubscriptionTransactionCard";
 
 export default function ViewSubscription() {
   const { id } = useParams();
@@ -66,15 +66,17 @@ export default function ViewSubscription() {
         onEdit={handleEdit}
         onDelete={handleDelete}
       />
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         <SubscriptionDetailsCard subscription={subscription} />
-        <AdditionalInfoCard subscription={subscription} />
-        <CustomerInfoCard customer={subscription.customer} />
+        <SubscriptionTransactionsCard subscription={subscription} />
       </div>
+
       <TransactionListWrapper
         defaultRows={5}
         queryParams={"&subscription=" + subscription.id}
       />
+
+      <CustomerInfoCard customer={subscription.customer} />
     </div>
   );
 }
