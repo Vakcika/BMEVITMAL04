@@ -33,12 +33,14 @@ export default function EditTransaction({
   const currencyId = searchParams.get("currencyId");
   const transactionTypeId = searchParams.get("transactionTypeId");
   const subscriptionId = searchParams.get("subscription");
+  const amount = searchParams.get("amount");
 
   const { initialValues, isLoading } = useTransactionData(isNew, id, {
     customerId,
     currencyId,
     transactionTypeId,
     subscriptionId,
+    amount,
   });
 
   const { createTransaction, updateTransaction } = useTransactionMutations();

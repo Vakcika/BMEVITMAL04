@@ -81,7 +81,9 @@ export default function ViewSubscription() {
           subscription.currency.id +
           "&transactionTypeId=1" +
           "&subscription=" +
-          subscription.id
+          subscription.id +
+          "&amount=" +
+          subscription.amount
         }
       />
 

@@ -14,6 +14,7 @@ interface UseTransactionDataParams {
   currencyId?: string | null;
   transactionTypeId?: string | null;
   subscriptionId?: string | null;
+  amount?: string | null;
 }
 export function useTransactionData(
   isNew: boolean,
@@ -23,6 +24,7 @@ export function useTransactionData(
     currencyId,
     transactionTypeId,
     subscriptionId,
+    amount = "0",
   }: UseTransactionDataParams = {}
 ) {
   const { user } = useAuth();
@@ -39,7 +41,7 @@ export function useTransactionData(
       id: subscriptionId ? parseInt(subscriptionId) : null,
     } as Subscription,
     created_by: user,
-    amount: 0,
+    amount: Number(amount),
     amount_in_base: 0,
     transaction_date: format(time, "yyyy-MM-dd'T'HH:mm"),
     due_date: null,
