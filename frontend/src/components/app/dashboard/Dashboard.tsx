@@ -118,7 +118,7 @@ export default function Dashboard() {
 
         <DashboardChartCard
           title="Customer Status Distribution"
-          description="Current status of all customers"
+          description="Current status of all not failed customers"
           height={300}
         >
           {isLoading.customerStatusPie ? (
@@ -173,8 +173,8 @@ export default function Dashboard() {
         </DashboardChartCard>
 
         <DashboardChartCard
-          title="Subscription Income Rate"
-          description="Monthly subscription revenue growth"
+          title="Subscriptions Income Rate"
+          description="Monthly subscription revenue growth compared to all income"
           height={300}
         >
           {isLoading.subscriptionIncomeRate ? (
