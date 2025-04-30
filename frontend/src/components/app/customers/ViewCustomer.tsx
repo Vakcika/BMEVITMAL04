@@ -78,7 +78,7 @@ export default function ViewCustomer() {
         defaultRows={5}
         queryParams={"&customer=" + customer.id}
         createQueryParams={
-          "&customer=" + customer.id + "&currencyId=1" + "&transactionTypeId=1"
+          "&customer=" + customer.id + "&currency=HUF" + "&transactionTypeId=1"
         }
       />
     </div>

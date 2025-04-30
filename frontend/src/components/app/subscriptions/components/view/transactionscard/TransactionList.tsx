@@ -16,7 +16,7 @@ export default function TransactionList({
 
   const handleCreateTransaction = () => {
     navigate(
-      `/app/transaction/new?$&customer=${subscription.customer.id}$&currencyId=${subscription.currency.id}$&transactionTypeId=1$&subscription=${subscription.id}&amount=${subscription.amount}`
+      `/app/transaction/new?$&customer=${subscription.customer.id}$&currency=${subscription.currency.code}&transactionTypeId=1$&subscription=${subscription.id}&amount=${subscription.amount}`
     );
   };
 

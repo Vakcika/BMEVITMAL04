@@ -10,7 +10,7 @@ export default function useIsAuthenticated() {
   useEffect(() => {
     apiClient
       .get(import.meta.env.VITE_API_URL + "api/user")
-      .then((res) => console.log(res))
+      //.then((res) => console.log(res))
       .catch((err: any) => {
         const errorMessage =
           err?.response?.data?.message ??

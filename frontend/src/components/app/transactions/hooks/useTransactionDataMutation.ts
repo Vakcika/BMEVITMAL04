@@ -7,7 +7,7 @@ import { Transaction } from "@/types/Transaction";
 interface TransactionApiData {
   id?: UUID;
   customer_id: number;
-  currency_id: number;
+  currency: string;
   created_by_id: number;
   subscription_id: number | null;
   transaction_type_id: number;
@@ -57,12 +57,12 @@ export function useTransactionMutations() {
       newValues.amount_in_base = values.amount;
     } else {
       const rate = await getExchangeRate(fromCurrencyCode);
-      newValues.amount_in_base = Math.round(values.amount * rate * 100) / 100; // Round to 2 decimals
+      newValues.amount_in_base = Math.round(values.amount * rate); // Round to 0 decimals
     }
 
     // Transform relationships to foreign keys
     newValues.customer_id = values.customer.id;
-    newValues.currency_id = values.currency.id;
+    newValues.currency = values.currency.code;
     newValues.created_by_id = user?.user?.id;
     newValues.subscription_id =
       values.subscription?.id === 0 ? null : values.subscription?.id;
@@ -70,7 +70,6 @@ export function useTransactionMutations() {
 
     // Remove nested objects
     delete newValues.customer;
-    delete newValues.currency;
     delete newValues.created_by;
     delete newValues.subscription;
     delete newValues.transaction_type;

@@ -11,7 +11,7 @@ interface TransactionResponse {
 }
 interface UseTransactionDataParams {
   customerId?: string | null;
-  currencyId?: string | null;
+  currency?: string | null;
   transactionTypeId?: string | null;
   subscriptionId?: string | null;
   amount?: string | null;
@@ -21,19 +21,18 @@ export function useTransactionData(
   id?: string,
   {
     customerId,
-    currencyId,
+    currency,
     transactionTypeId,
     subscriptionId,
     amount = "0",
   }: UseTransactionDataParams = {}
 ) {
   const { user } = useAuth();
-
   const time = new Date();
   const initialValues: Transaction = {
     id: "" as UUID,
     customer: { id: customerId ? parseInt(customerId) : 0 } as Customer,
-    currency: { id: currencyId ? parseInt(currencyId) : 0 } as Currency,
+    currency: { code: currency ?? "HUF" } as Currency,
     transaction_type: {
       id: transactionTypeId ? parseInt(transactionTypeId) : 0,
     } as TransactionType,

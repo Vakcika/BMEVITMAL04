@@ -77,8 +77,8 @@ export default function ViewSubscription() {
         createQueryParams={
           "&customer=" +
           subscription.customer.id +
-          "&currencyId=" +
-          subscription.currency.id +
+          "&currency=" +
+          subscription.currency.code +
           "&transactionTypeId=1" +
           "&subscription=" +
           subscription.id +

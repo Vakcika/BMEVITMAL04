@@ -117,7 +117,7 @@ export const TransactionTable = ({
                   </TableCell>
                   <TableCell className="text-center">
                     {transaction.currency?.symbol}
-                    {transaction.amount} ({transaction.amount_in_base})
+                    {transaction.amount} ({transaction.amount_in_base} Ft)
                   </TableCell>
                   <TableCell>{transaction.note}</TableCell>
                   <TableCell>

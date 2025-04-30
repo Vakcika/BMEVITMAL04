@@ -25,7 +25,7 @@ export default function AdditionalInfoCard({
           />
           <Detail
             label="Amount in Base Currency"
-            value={transaction.amount_in_base}
+            value={transaction.amount_in_base + " HUF"}
           />
         </div>
       </CardContent>

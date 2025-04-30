@@ -5,8 +5,10 @@ export const TransactionSchema = Yup.object().shape({
     id: Yup.number().min(1, "Customer is required").required(),
   }).required(),
   currency: Yup.object({
-    id: Yup.number().min(1, "Currency is required").required(),
-  }).required(),
+    code: Yup.string()
+      .required("You must select a currency")
+      .notOneOf(["all"], "You must select a currency"),
+  }).required("You must select a currency"),
   subscription: Yup.object({
     id: Yup.number().required("Invalid subscription"),
   })

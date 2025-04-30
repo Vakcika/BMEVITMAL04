@@ -6,13 +6,29 @@ use Illuminate\Foundation\Http\FormRequest;
 use \App\Rules\TransactionBillingCycleLimit;
 use \App\Rules\DateNotBeforeTransactionDate;
 use \App\Rules\SubscriptionConsistency;
-
+use App\Models\Currency;
 
 class TransactionRequest extends FormRequest
 {
     public function authorize(): bool
     {
         return true;
+    }
+
+    protected function prepareForValidation(): void
+    {
+        /** @var \Illuminate\Http\Request $this */
+        $currencyCode = $this->input('currency.code') ?? $this->input('currency');
+
+        if ($currencyCode) {
+            $currency = Currency::where('code', strtoupper($currencyCode))->first();
+
+            if ($currency) {
+                $this->merge([
+                    'currency_id' => $currency->id,
+                ]);
+            }
+        }
     }
 
     public function rules(): array

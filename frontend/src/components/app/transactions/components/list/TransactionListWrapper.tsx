@@ -28,8 +28,12 @@ export default function TransactionListWrapper({
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState(defaultRows);
+
+  const [searchParams] = useSearchParams();
+  const queryString = searchParams.toString();
+
   const query = useHttpGet<PagableResourceWrapper<Transaction[]>>(
-    `${baseUrl}?per_page=${rows}&page=${page}${queryParams}`
+    `${baseUrl}?per_page=${rows}&page=${page}${queryParams}&${queryString}`
   );
 
   if (query.error) {

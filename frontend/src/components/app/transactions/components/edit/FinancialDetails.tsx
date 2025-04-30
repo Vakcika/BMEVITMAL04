@@ -43,19 +43,19 @@ export default function FinancialDetail({
         <FormSelect
           label="Currency*"
           name="currency"
-          value={values.currency.id.toString()}
+          value={values.currency.code}
           onChange={(value, selected) =>
             setFieldValue("currency", {
-              id: Number(value),
+              code: value,
               ...selected,
             })
           }
           options={currencies}
-          getOptionValue={(c) => c.id.toString()}
+          getOptionValue={(c) => c.code}
           getOptionLabel={(c) => `${c.code} (${c.symbol})`}
           placeholder="Select currency"
           emptyLabel="None"
-          error={touched.currency?.id && (errors.currency?.id as string)}
+          error={touched.currency?.code && (errors.currency?.code as string)}
         />
       </div>
     </div>

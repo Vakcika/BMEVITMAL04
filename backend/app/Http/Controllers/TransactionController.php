@@ -20,7 +20,7 @@ class TransactionController extends Controller
             'customer' => 'nullable|string|exists:customers,id',
             'subscription' => 'nullable|string|exists:subscriptions,id',
             'type' => 'nullable|string|exists:transaction_types,name',
-            'year' => 'nullable|integer|min:1900|max:' . now()->year, // <-- ADD THIS
+            'year' => 'nullable|integer|min:1900|max:' . now()->year,
             'sort_by' => 'nullable|in:amount,amount_in_base,transaction_date,created_at,updated_at',
             'sort_dir' => 'nullable|in:asc,desc',
             'per_page' => 'nullable|integer|min:1|max:100',
