@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { toast } from "sonner";
 import useHttpGet from "@/api/useHttpGet";
 import { BillingCycle, Subscription } from "@/types/Subscription";
@@ -25,14 +26,14 @@ export default function useFormOptions() {
   );
   const logTypesQuery = useHttpGet<LogType[]>("/api/log-statuses");
 
-  const handleError = (error: any, defaultMessage: string) => {
+  const handleError = useCallback((error: any, defaultMessage: string) => {
     if (error) {
       toast.error(
         error?.response?.data?.message ?? error?.message ?? defaultMessage
       );
       console.error(error);
     }
-  };
+  }, []);
 
   handleError(statusesQuery.error, "Failed to load status.");
   handleError(usersQuery.error, "Failed to load users.");
