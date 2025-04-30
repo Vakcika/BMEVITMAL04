@@ -9,19 +9,12 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { CustomerTable } from "./CustomerTable";
 
-interface Props {
-  title?: string;
-  baseUrl?: string;
-  defaultRows?: number;
-  queryParams?: string;
-}
-
 export default function CustomerListWrapper({
   title = "Customers",
   defaultRows = 25,
   baseUrl = "/api/customers",
   queryParams = "",
-}: Readonly<Props>) {
+}: Readonly<WrapperProps>) {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState(defaultRows);

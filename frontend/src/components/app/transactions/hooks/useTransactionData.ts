@@ -34,7 +34,7 @@ export function useTransactionData(
     customer: { id: customerId ? parseInt(customerId) : 0 } as Customer,
     currency: { code: currency ?? "HUF" } as Currency,
     transaction_type: {
-      id: transactionTypeId ? parseInt(transactionTypeId) : 0,
+      id: transactionTypeId ? parseInt(transactionTypeId) : 1,
     } as TransactionType,
     subscription: {
       id: subscriptionId ? parseInt(subscriptionId) : null,

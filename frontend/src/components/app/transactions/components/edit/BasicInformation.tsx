@@ -58,7 +58,6 @@ export default function BasicInformation({
           getOptionValue={(t) => t.id.toString()}
           getOptionLabel={(t) => t.name}
           placeholder="Select transaction type"
-          emptyLabel="None"
           error={
             touched.transaction_type?.id &&
             (errors.transaction_type?.id as string)

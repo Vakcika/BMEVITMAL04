@@ -71,7 +71,10 @@ export default function ViewCustomer() {
       </div>
       <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
         <LogListWrapper customer={customer} />
-        <SubscriptionListWrapper queryParams={"&customer=" + customer.id} />
+        <SubscriptionListWrapper
+          queryParams={"&customer=" + customer.id}
+          createQueryParams={"&customer=" + customer.id}
+        />
       </div>
 
       <TransactionListWrapper

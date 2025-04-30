@@ -73,7 +73,6 @@ export default function BasicInformation({
           getOptionValue={(b) => b.id.toString()}
           getOptionLabel={(b) => b.name}
           placeholder="Select billing cycle"
-          emptyLabel="None"
           error={
             touched.billing_cycle?.id && (errors.billing_cycle?.id as string)
           }

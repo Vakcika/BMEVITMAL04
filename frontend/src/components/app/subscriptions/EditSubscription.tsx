@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { Formik, Form, FormikHelpers } from "formik";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -21,12 +21,16 @@ interface EditSubscriptionProps {
 export default function EditSubscription({
   isNew = false,
 }: Readonly<EditSubscriptionProps>) {
+  const [searchParams] = useSearchParams();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const { initialValues, isLoading } = useSubscriptionData(isNew, id);
-
   const { customers, currencies, billingCycles } = useFormOptions();
+
+  const customerId = searchParams.get("customer");
+  const { initialValues, isLoading } = useSubscriptionData(isNew, id, {
+    customerId,
+  });
 
   const { createSubscription, updateSubscription } = useSubscriptionMutations();
 

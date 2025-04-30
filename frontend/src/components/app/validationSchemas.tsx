@@ -102,10 +102,14 @@ export const SubscriptionSchema = Yup.object().shape({
     id: Yup.number().required("Customer is required"),
   }),
   billing_cycle: Yup.object().shape({
-    id: Yup.number().required("Billing cycle is required"),
+    id: Yup.number()
+      .notOneOf([0], "Billing cycle is required")
+      .required("Billing cycle is required"),
   }),
   currency: Yup.object().shape({
-    id: Yup.number().required("Currency is required"),
+    id: Yup.number()
+      .notOneOf([0], "Currency is required")
+      .required("Currency is required"),
   }),
   amount: Yup.number()
     .required("Amount is required")

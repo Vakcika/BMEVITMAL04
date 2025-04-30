@@ -10,19 +10,13 @@ import { Plus } from "lucide-react";
 import { Subscription } from "@/types/Subscription";
 import { SubscriptionTable } from "./SubscriptionTable";
 
-interface Props {
-  title?: string;
-  baseUrl?: string;
-  defaultRows?: number;
-  queryParams?: string;
-}
-
 export default function SubscriptionListWrapper({
   title = "Subscriptions",
   baseUrl = "/api/subscriptions",
   defaultRows = 25,
   queryParams = "",
-}: Readonly<Props>) {
+  createQueryParams = "",
+}: Readonly<WrapperProps>) {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState(defaultRows);
@@ -45,7 +39,7 @@ export default function SubscriptionListWrapper({
   };
 
   const handleCreate = () => {
-    navigate("/app/subscription/new");
+    navigate(`/app/subscription/new?${createQueryParams}`);
   };
 
   const handleDelete = async (subscription: Subscription) => {

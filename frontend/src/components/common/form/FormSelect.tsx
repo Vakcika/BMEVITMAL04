@@ -32,6 +32,14 @@ export function FormSelect<T>({
   error,
   emptyLabel,
 }: Readonly<FormSelectProps<T>>) {
+  const selectedOption = options.find((o) => getOptionValue(o) === value);
+  const selectedLabel =
+    value === "all" && emptyLabel
+      ? emptyLabel
+      : selectedOption
+      ? getOptionLabel(selectedOption)
+      : undefined;
+
   const handleSelectAll = () => {
     onChange("all", null);
   };
@@ -54,7 +62,9 @@ export function FormSelect<T>({
       <Label htmlFor={name}>{label}</Label>
       <Select name={name} value={value} onValueChange={handleChange}>
         <SelectTrigger>
-          <SelectValue placeholder={placeholder} />
+          <SelectValue placeholder={placeholder}>
+            {selectedLabel || placeholder}
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           {emptyLabel && <SelectItem value="all">{emptyLabel}</SelectItem>}

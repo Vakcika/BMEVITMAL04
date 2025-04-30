@@ -7,13 +7,21 @@ interface SubscriptionResponse {
   data: Subscription;
 }
 
-export function useSubscriptionData(isNew: boolean, id?: string) {
+interface UseSubscriptionDataParams {
+  customerId?: string | null;
+}
+
+export function useSubscriptionData(
+  isNew: boolean,
+  id?: string,
+  { customerId }: UseSubscriptionDataParams = {}
+) {
   const initialValues: Subscription = {
     id: 0,
     name: "",
-    customer: { id: 0 } as Customer,
-    billing_cycle: { id: 0 } as BillingCycle,
-    currency: { id: 0 } as Currency,
+    customer: { id: customerId ? parseInt(customerId) : 0 } as Customer,
+    billing_cycle: { id: 3 } as BillingCycle,
+    currency: { id: 1 } as Currency,
     amount: 0,
     start_date: "",
     end_date: "",

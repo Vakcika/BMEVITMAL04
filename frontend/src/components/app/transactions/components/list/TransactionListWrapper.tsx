@@ -10,21 +10,13 @@ import { Plus } from "lucide-react";
 import { TransactionTable } from "@/components/app/transactions/components/list/TransactionTable";
 import { Transaction } from "@/types/Transaction";
 
-interface Props {
-  title?: string;
-  baseUrl?: string;
-  defaultRows?: number;
-  queryParams?: string;
-  createQueryParams?: string;
-}
-
 export default function TransactionListWrapper({
   title = "Transactions",
   baseUrl = "/api/transactions",
   defaultRows = 25,
   queryParams = "",
   createQueryParams = "",
-}: Readonly<Props>) {
+}: Readonly<WrapperProps>) {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState(defaultRows);

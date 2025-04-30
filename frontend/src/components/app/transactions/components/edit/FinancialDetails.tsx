@@ -54,7 +54,6 @@ export default function FinancialDetail({
           getOptionValue={(c) => c.code}
           getOptionLabel={(c) => `${c.code} (${c.symbol})`}
           placeholder="Select currency"
-          emptyLabel="None"
           error={touched.currency?.code && (errors.currency?.code as string)}
         />
       </div>
