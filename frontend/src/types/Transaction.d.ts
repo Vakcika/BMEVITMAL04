@@ -9,7 +9,7 @@ interface Transaction {
   created_by: User;
   amount: number;
   amount_in_base: number;
-  transaction_date: string | null;
+  transaction_date: string;
   due_date: string | null;
   payment_date: string | null;
   note: string | null;
