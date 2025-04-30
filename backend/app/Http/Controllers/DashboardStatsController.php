@@ -103,10 +103,11 @@ class DashboardStatsController extends Controller
         });
     }
 
-    public function customerStatusPie()
+    public function customerStatusDistribution()
     {
         return DB::table('customers')
             ->join('customer_statuses', 'customers.status_id', '=', 'customer_statuses.id')
+            ->where('customer_statuses.name', '!=', 'Failed')
             ->select('customer_statuses.name', DB::raw('COUNT(customers.id) as count'))
             ->groupBy('customer_statuses.name')
             ->get();

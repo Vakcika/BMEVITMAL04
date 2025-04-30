@@ -7,7 +7,9 @@ export default function useDashboardStats() {
     "/api/monthly-income-expense"
   );
   const customerCountQuery = useHttpGet<any[]>("/api/customer-count");
-  const customerStatusPieQuery = useHttpGet<any[]>("/api/customer-status-pie");
+  const customerStatusDistributionQuery = useHttpGet<any[]>(
+    "/api/customer-status-distribution"
+  );
   const subscriptionIncomeRateQuery = useHttpGet<any>(
     "/api/subscription-income-rate"
   );
@@ -17,14 +19,14 @@ export default function useDashboardStats() {
     companyBalance: companyBalanceQuery.data ?? {},
     monthlyIncomeExpense: monthlyIncomeExpenseQuery.data ?? [],
     customerCount: customerCountQuery.data ?? [],
-    customerStatusPie: customerStatusPieQuery.data ?? [],
+    customerStatusPie: customerStatusDistributionQuery.data ?? [],
     subscriptionIncomeRate: subscriptionIncomeRateQuery.data ?? [],
     isLoading: {
       customerBalances: customerBalancesQuery.isLoading,
       companyBalance: companyBalanceQuery.isLoading,
       monthlyIncomeExpense: monthlyIncomeExpenseQuery.isLoading,
       customerCount: customerCountQuery.isLoading,
-      customerStatusPie: customerStatusPieQuery.isLoading,
+      customerStatusPie: customerStatusDistributionQuery.isLoading,
       subscriptionIncomeRate: subscriptionIncomeRateQuery.isLoading,
     },
   };

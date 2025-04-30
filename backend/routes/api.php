@@ -109,6 +109,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/company-balance', [DashboardStatsController::class, 'companyBalance']);
     Route::get('/monthly-income-expense', [DashboardStatsController::class, 'monthlyIncomeExpense']);
     Route::get('/customer-count', [DashboardStatsController::class, 'customerCountByMonth']);
-    Route::get('/customer-status-pie', [DashboardStatsController::class, 'customerStatusPie']);
+    Route::get('/customer-status-distribution', [DashboardStatsController::class, 'customerStatusDistribution']);
     Route::get('/subscription-income-rate', [DashboardStatsController::class, 'subscriptionIncomeRate']);
 });
