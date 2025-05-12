@@ -72,7 +72,7 @@ export function SubscriptionRateChart({
             dy={10}
             tick={{ fontSize: 12 }}
             tickFormatter={(value) => {
-              const [year, month] = value.split("-");
+              const month = value.split("-")[1];
               const monthNames = [
                 "Jan",
                 "Feb",

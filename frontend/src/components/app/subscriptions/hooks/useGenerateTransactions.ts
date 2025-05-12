@@ -180,7 +180,7 @@ export function useGenerateTransactions() {
             created_by: user,
             amount: subscription.amount,
             amount_in_base: subscription.amount,
-            transaction_date: null,
+            transaction_date: "",
             due_date: dueDate.toISOString(),
             payment_date: null,
             note: `${subscription.name} payment (${

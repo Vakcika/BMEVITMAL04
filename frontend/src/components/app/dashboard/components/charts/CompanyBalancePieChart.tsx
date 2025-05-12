@@ -73,7 +73,6 @@ export function CompanyBalancePieChart({
             <Label
               content={({ viewBox }) => {
                 if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                  const currency = Object.keys(data)[0] || "HUF";
                   return (
                     <text
                       x={viewBox.cx}
